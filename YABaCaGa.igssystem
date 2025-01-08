@@ -516,6 +516,72 @@
                 "plugin": "ingescape_class",
                 "uuid": "7700e712-ab00-4cd3-ab5c-d5e7bfe3718c",
                 "version": ""
+            },
+            {
+                "className": "Bird",
+                "color": 0,
+                "definition": {
+                    "inputs": [
+                        {
+                            "name": "note",
+                            "type": "INTEGER"
+                        }
+                    ],
+                    "services": [
+                        {
+                            "arguments": [
+                                {
+                                    "name": "elementId",
+                                    "type": "INTEGER"
+                                }
+                            ],
+                            "name": "elementCreated"
+                        },
+                        {
+                            "arguments": [
+                                {
+                                    "name": "succeeded",
+                                    "type": "BOOL"
+                                }
+                            ],
+                            "name": "actionResult"
+                        }
+                    ]
+                },
+                "description": "",
+                "icon": -1,
+                "package": "",
+                "plugin": "ingescape_class",
+                "uuid": "5b85201d-5d71-40a7-8378-b6c25f26b706",
+                "version": ""
+            },
+            {
+                "className": "PitchDetector",
+                "color": 0,
+                "definition": {
+                    "inputs": [
+                        {
+                            "name": "volumeTresh",
+                            "type": "DOUBLE"
+                        }
+                    ],
+                    "outputs": [
+                        {
+                            "name": "noteName",
+                            "type": "STRING"
+                        },
+                        {
+                            "name": "note",
+                            "type": "INTEGER"
+                        }
+                    ]
+                },
+                "description": "",
+                "icon": -1,
+                "package": "",
+                "plugin": "ingescape_class",
+                "uuid": "fbc4e8a0-df34-4c70-bd1f-086c6f835465",
+                "version": ""
             }
         ],
         "snippets": [
@@ -585,21 +651,8 @@
                     "simulationTime": 5000,
                     "uuid": "9d2ce334-9e3b-4107-9d72-19d2280b0800",
                     "width": 250,
-                    "x": 403.6830691030915,
-                    "y": 579.9093978980535
-                },
-                {
-                    "agent": {
-                    },
-                    "class": "118ec52d-5aba-5ee0-baa7-ae34d567f092",
-                    "comment": "",
-                    "height": 202,
-                    "name": "Whiteboard",
-                    "simulationTime": 5000,
-                    "uuid": "88a1d5c4-70a1-43d5-9073-97a385e1c40b",
-                    "width": 252,
-                    "x": 836.5714336048762,
-                    "y": 330.6621765700945
+                    "x": 412.19048174780994,
+                    "y": -15.609487232241236
                 },
                 {
                     "agent": {
@@ -611,8 +664,44 @@
                     "simulationTime": 5000,
                     "uuid": "0f698e9c-94df-4d84-9f48-df7192d668ae",
                     "width": 250,
-                    "x": 406.8142840457032,
-                    "y": 287.2212550723761
+                    "x": 410.3071648469902,
+                    "y": 259.2782086620813
+                },
+                {
+                    "agent": {
+                        "instances": [
+                            {
+                                "commandLine": "C:\\Users\\sylva\\Documents\\WS\\IHM\\Whiteboard\\Whiteboard.exe",
+                                "hostname": "LAPTOP-JB0J06CC",
+                                "ip": "192.168.56.1",
+                                "isAttachedToCircle": false,
+                                "uuid": "db4c7738-9153-4b23-9319-9b5102bd64f0"
+                            },
+                            {
+                                "commandLine": "/media/lucas/T7/repositories/projet_IHM/agents/Whiteboard/bin/Whiteboard",
+                                "hostname": "adell",
+                                "ip": "172.22.224.176",
+                                "isAttachedToCircle": false,
+                                "uuid": "2813c87b-ca64-4605-9e5f-9dcb43b6c9dc"
+                            },
+                            {
+                                "commandLine": "C:\\Users\\sylva\\Documents\\WS\\IHM\\Whiteboard\\Whiteboard.exe",
+                                "hostname": "LAPTOP-JB0J06CC",
+                                "ip": "127.0.0.1",
+                                "isAttachedToCircle": false,
+                                "uuid": "9b1f763d-4843-44b9-91f4-5c696f6d0a87"
+                            }
+                        ]
+                    },
+                    "class": "118ec52d-5aba-5ee0-baa7-ae34d567f092",
+                    "comment": "",
+                    "height": 202,
+                    "name": "Whiteboard",
+                    "simulationTime": 5000,
+                    "uuid": "88a1d5c4-70a1-43d5-9073-97a385e1c40b",
+                    "width": 252,
+                    "x": 832.496406003375,
+                    "y": 292.8226345561536
                 }
             ],
             "links": {
