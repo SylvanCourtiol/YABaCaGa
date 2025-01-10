@@ -516,72 +516,14 @@
                 "plugin": "ingescape_class",
                 "uuid": "7700e712-ab00-4cd3-ab5c-d5e7bfe3718c",
                 "version": ""
-            },
+            }
+        ],
+        "scripts": [
             {
-                "className": "Bird",
-                "color": 0,
-                "definition": {
-                    "inputs": [
-                        {
-                            "name": "note",
-                            "type": "INTEGER"
-                        }
-                    ],
-                    "services": [
-                        {
-                            "arguments": [
-                                {
-                                    "name": "elementId",
-                                    "type": "INTEGER"
-                                }
-                            ],
-                            "name": "elementCreated"
-                        },
-                        {
-                            "arguments": [
-                                {
-                                    "name": "succeeded",
-                                    "type": "BOOL"
-                                }
-                            ],
-                            "name": "actionResult"
-                        }
-                    ]
-                },
-                "description": "",
-                "icon": -1,
+                "code": "//\n// Test\n//\n// created on 2025-01-10\n//\n\n// The script language documentation is available at\n// https://ingescape.com/verification-validation-using-ingescape/\n\n\"My sample block\" {\n    // -> \"manual entry in the execution report\"\n\n    // Input allocation\n    // MyAgent.my_input = 12\n\n    // Output verification\n    // assert MyAgent.my_output >= 5.43\n\n    // Service call\n    // MyAgent.my_service (\"arg1\", 12.34)\n\n    // Reply verification\n    // assert my_reply from CallerAgent with arg2 = 34.56 and arg3 = \"this value\"\n}\n\n",
+                "name": "Test",
                 "package": "",
-                "plugin": "ingescape_class",
-                "uuid": "5b85201d-5d71-40a7-8378-b6c25f26b706",
-                "version": ""
-            },
-            {
-                "className": "PitchDetector",
-                "color": 0,
-                "definition": {
-                    "inputs": [
-                        {
-                            "name": "volumeTresh",
-                            "type": "DOUBLE"
-                        }
-                    ],
-                    "outputs": [
-                        {
-                            "name": "noteName",
-                            "type": "STRING"
-                        },
-                        {
-                            "name": "note",
-                            "type": "INTEGER"
-                        }
-                    ]
-                },
-                "description": "",
-                "icon": -1,
-                "package": "",
-                "plugin": "ingescape_class",
-                "uuid": "fbc4e8a0-df34-4c70-bd1f-086c6f835465",
-                "version": ""
+                "uuid": "869d5cea-f93d-4360-8e9f-8bc9c059960e"
             }
         ],
         "snippets": [
@@ -656,19 +598,6 @@
                 },
                 {
                     "agent": {
-                    },
-                    "class": "a32b6240-930a-459b-ae67-6c42279c5693",
-                    "comment": "",
-                    "height": 246,
-                    "name": "YABaCaGaServer",
-                    "simulationTime": 5000,
-                    "uuid": "0f698e9c-94df-4d84-9f48-df7192d668ae",
-                    "width": 250,
-                    "x": 410.3071648469902,
-                    "y": 259.2782086620813
-                },
-                {
-                    "agent": {
                         "instances": [
                             {
                                 "commandLine": "C:\\Users\\sylva\\Documents\\WS\\IHM\\Whiteboard\\Whiteboard.exe",
@@ -678,18 +607,18 @@
                                 "uuid": "db4c7738-9153-4b23-9319-9b5102bd64f0"
                             },
                             {
-                                "commandLine": "/media/lucas/T7/repositories/projet_IHM/agents/Whiteboard/bin/Whiteboard",
-                                "hostname": "adell",
-                                "ip": "172.22.224.176",
-                                "isAttachedToCircle": false,
-                                "uuid": "2813c87b-ca64-4605-9e5f-9dcb43b6c9dc"
-                            },
-                            {
                                 "commandLine": "C:\\Users\\sylva\\Documents\\WS\\IHM\\Whiteboard\\Whiteboard.exe",
                                 "hostname": "LAPTOP-JB0J06CC",
                                 "ip": "127.0.0.1",
                                 "isAttachedToCircle": false,
                                 "uuid": "9b1f763d-4843-44b9-91f4-5c696f6d0a87"
+                            },
+                            {
+                                "commandLine": "/media/lucas/T7/repositories/projet_IHM/agents/Whiteboard/bin/Whiteboard",
+                                "hostname": "adell",
+                                "ip": "172.22.224.176",
+                                "isAttachedToCircle": false,
+                                "uuid": "2813c87b-ca64-4605-9e5f-9dcb43b6c9dc"
                             }
                         ]
                     },
@@ -702,6 +631,70 @@
                     "width": 252,
                     "x": 832.496406003375,
                     "y": 292.8226345561536
+                },
+                {
+                    "agent": {
+                        "instances": [
+                            {
+                                "commandLine": "\"C:\\Program Files\\Ingescape\\Ingescape Circle v4\\igsProxy.exe\" --port 40500 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/sylva/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
+                                "hostname": "LAPTOP-JB0J06CC",
+                                "ip": "127.0.0.1",
+                                "isAttachedToCircle": false,
+                                "uuid": "342587f4-6416-40e0-8561-ca8cca0098c4"
+                            },
+                            {
+                                "commandLine": "\"C:/Program Files/Ingescape/Ingescape Circle v4/igsProxy.exe\" --port 40500 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/sylva/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
+                                "isAttachedToCircle": true,
+                                "uuid": "e6e6b7ad-e20c-44e0-8c4f-dfecd8873eb0"
+                            }
+                        ]
+                    },
+                    "class": "48879EBE0FBC48D8B429F11510954D9B",
+                    "comment": "",
+                    "height": 100,
+                    "name": "Proxy",
+                    "simulationTime": 5000,
+                    "uuid": "d027553e-bb4f-4054-a287-a637d392c349",
+                    "width": 250,
+                    "x": -19.224080986602075,
+                    "y": 654.960204882343
+                },
+                {
+                    "data": {
+                        "data_decoder": "BINARY",
+                        "msg_type": "",
+                        "proto_file_path": "",
+                        "string_decoder": "PLAIN_TEXT"
+                    },
+                    "height": 112,
+                    "name": "",
+                    "tool": "com.ingescape.circle.tool.observer",
+                    "uuid": "767d0232-ba57-46d2-bdec-fdc3d0f8b64e",
+                    "width": 270,
+                    "x": 773.444652726558,
+                    "y": 168.38947880808814
+                },
+                {
+                    "agent": {
+                        "instances": [
+                            {
+                                "commandLine": "\"C:\\Program Files\\Ingescape\\Ingescape Circle v4\\igsProxy.exe\" --port 40500 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/sylva/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
+                                "hostname": "LAPTOP-JB0J06CC",
+                                "ip": "127.0.0.1",
+                                "isAttachedToCircle": false,
+                                "uuid": "0226e2ea-5a91-4f31-9965-c47b137ca30e"
+                            }
+                        ]
+                    },
+                    "class": "a32b6240-930a-459b-ae67-6c42279c5693",
+                    "comment": "",
+                    "height": 246,
+                    "name": "YABaCaGaServer",
+                    "simulationTime": 5000,
+                    "uuid": "0f698e9c-94df-4d84-9f48-df7192d668ae",
+                    "width": 250,
+                    "x": 410.3071648469902,
+                    "y": 248.23905893910188
                 }
             ],
             "links": {
@@ -777,6 +770,20 @@
                         "fromInput": "labelsVisible",
                         "to": "YABaCaGaServer",
                         "toOutput": "labelsVisible"
+                    }
+                ],
+                "others": [
+                    {
+                        "destination": "767d0232-ba57-46d2-bdec-fdc3d0f8b64e",
+                        "destinationIO": {
+                            "name": "wildcard",
+                            "type": "INPUT"
+                        },
+                        "source": "0f698e9c-94df-4d84-9f48-df7192d668ae",
+                        "sourceIO": {
+                            "name": "chatMessage",
+                            "type": "OUTPUT"
+                        }
                     }
                 ]
             },

@@ -35,14 +35,14 @@ public class Server implements AgentEventListener, WebSocketEventListener {
         _logger.info("Start Java app 'Server'");
         _logger.info("is DEBUG enabled ? {}", _logger.isDebugEnabled());
 
-    	Global globalContext = new Global("ws://localhost:40500");
+    	Global globalContext = new Global("ws://127.0.0.1:8080");
 
         InputCallback inputCB = new InputCallback();
 
     	Server Server = new Server();
         globalContext.observeWebSocketEvents(Server);
 
-        Agent agent = globalContext.agentCreate("Server");
+        Agent agent = globalContext.agentCreate("YABaCaGaServer");
 		agent.observeAgentEvents(Server);
 
 		agent.definition.setClass("Server");
@@ -61,8 +61,10 @@ public class Server implements AgentEventListener, WebSocketEventListener {
         agent.definition.outputCreate("labelsVisible", IopType.IGS_BOOL_T);
 
 		agent.start();
+		Thread.sleep(1000);
 		
-		agent.outputSetString("chatMessage", "Coucou batard");
+		agent.outputSetString("chatMessage", "Coucou");
+		
 		System.out.println("Press Enter to stop the agent");
 		Scanner scanner = new Scanner(System.in);
         try {
