@@ -9,11 +9,17 @@ import org.slf4j.LoggerFactory;
 import com.ingescape.*;
 import callbacks.*;
 
-public class Server implements AgentEventListener, WebSocketEventListener {
+public class Server implements AgentEventListener, WebSocketEventListener, ServiceListener {
 
 	private static Logger _logger = LoggerFactory.getLogger(Server.class);
 
 	public Server() {}
+	
+	@Override
+	public void handleCallToService(Agent agent, String senderAgentName, String senderAgentUUID, String serviceName, List<Object> arguments, String token) {
+		_logger.debug("**received service call from {} ({}): {} (with token {})", senderAgentName, senderAgentUUID, serviceName, arguments, token);
+	
+	}
 
 	@Override
 	public void handleAgentEvent(Agent agent, AgentEvent event, String uuid, String name, Object eventData) {
@@ -37,7 +43,6 @@ public class Server implements AgentEventListener, WebSocketEventListener {
 
     	Global globalContext = new Global("ws://127.0.0.1:8080");
 
-        InputCallback inputCB = new InputCallback();
 
     	Server Server = new Server();
         globalContext.observeWebSocketEvents(Server);
@@ -47,23 +52,26 @@ public class Server implements AgentEventListener, WebSocketEventListener {
 
 		agent.definition.setClass("Server");
 
-        agent.definition.inputCreate("receiveFromPlayer", IopType.IGS_DATA_T);
-        agent.observeInput("receiveFromPlayer", inputCB);
-        agent.definition.inputCreate("image", IopType.IGS_DATA_T);
-        agent.observeInput("image", inputCB);
-        agent.definition.outputCreate("sendToPlayer", IopType.IGS_DATA_T);
-        agent.definition.outputCreate("prompt", IopType.IGS_STRING_T);
+		agent.serviceInit("enterPlayer", Server);
+		agent.serviceArgAdd("enterPlayer", "player", IopType.IGS_DATA_T);
+		
+		agent.serviceInit("receiveBet", Server);
+		agent.serviceArgAdd("receiveBet", "playerId", IopType.IGS_INTEGER_T);
+		agent.serviceArgAdd("receiveBet", "cardId", IopType.IGS_INTEGER_T);
+		agent.serviceArgAdd("receiveBet", "runes", IopType.IGS_INTEGER_T);
+		agent.serviceArgAdd("receiveBet", "rage", IopType.IGS_BOOL_T);
+		
+		
         agent.definition.outputCreate("title", IopType.IGS_STRING_T);
-        agent.definition.outputCreate("backgroundColor", IopType.IGS_STRING_T);
         agent.definition.outputCreate("chatMessage", IopType.IGS_STRING_T);
         agent.definition.outputCreate("clear", IopType.IGS_IMPULSION_T);
         agent.definition.outputCreate("ui_command", IopType.IGS_STRING_T);
-        agent.definition.outputCreate("labelsVisible", IopType.IGS_BOOL_T);
 
 		agent.start();
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 		
-		agent.outputSetString("chatMessage", "Coucou");
+		agent.outputSetString("title", "YABaCaGa !");
+		agent.outputSetString("chatMessage", "Server connected.");
 		
 		System.out.println("Press Enter to stop the agent");
 		Scanner scanner = new Scanner(System.in);
@@ -76,4 +84,5 @@ public class Server implements AgentEventListener, WebSocketEventListener {
 
         agent.stop();
     }
+	
 }
