@@ -14,6 +14,8 @@ public class Player {
 	private int healthPoints = GameMaster.DEFAULT_HEALTH_POINTS;
 	
 	private List<Card> deck = new ArrayList<Card>();
+	
+	private List<Card> played = new ArrayList<Card>();
 
 	public Player(String name, List<Card> deck) {
 		super();
@@ -51,6 +53,21 @@ public class Player {
 
 	public void setHealthPoints(int healthPoints) {
 		this.healthPoints = healthPoints;
+	}
+	
+	public void play(Card card) {
+		if (!deck.contains(card)) {
+			throw new IllegalArgumentException();
+		}
+		played.add(card);
+	}
+	
+	public List<Card> getDeck() {
+		return deck;
+	}
+	
+	public List<Card> getPlayedCards() {
+		return played;
 	}
 	
 }

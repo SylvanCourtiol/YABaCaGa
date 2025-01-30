@@ -36,8 +36,13 @@ public class Card {
 	/**
 	 * Skill of this card.
 	 */
-	private Skill skill = null; 
+	private Skill skill = new Skill(); 
 	
+	@Override
+	public String toString() {
+		return name;
+	}
+
 	/**
 	 * A battle card of id id and name name.
 	 * @param id id of the card.

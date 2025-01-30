@@ -34,7 +34,7 @@ public class Skill {
 	/**
 	 * Modifier amount corresponding to 1 point of cost.
 	 */
-	public static final float MODIFIER_COST_UNIT = 0.1f;
+	public static final float MODIFIER_COST_UNIT = 0.5f;
 	
 	/**
 	 * The power modifier for this skill.
@@ -88,12 +88,12 @@ public class Skill {
 		List<Skill> skills = new ArrayList<>();
 		
 		Skill s = new Skill();
-		s.setPowerModifier(1.2f);
+		s.setPowerModifier(2.0f);
 		skills.add(s);
 		
 		s = new Skill();
-		s.setPowerModifier(1.1f);
-		s.setDamageModifier(1.1f);
+		s.setPowerModifier(1.5f);
+		s.setDamageModifier(1.5f);
 		skills.add(s);
 		
 		s = new Skill();
@@ -292,8 +292,10 @@ public class Skill {
         if (runePoison != NEUTRAL_BONUS) {
         	result.append(String.format("rune poison: %d\n", runePoison));
         }
+		if (result.length() == 0) {
+			result.append("No skill\n");
+		}
 		result.append(String.format("Cost: %d\n", getCost()));
-		
 		return result.toString();
 	}
 	
