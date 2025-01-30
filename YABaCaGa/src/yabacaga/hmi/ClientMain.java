@@ -8,8 +8,13 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXMLLoader;
 
-
-public class Main extends Application {
+/**
+ * Client start point of the GUI.
+ * 
+ * @author Mattéo Camin
+ * @author Sylvan Courtiol
+ */
+public class ClientMain extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {

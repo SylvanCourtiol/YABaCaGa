@@ -16,10 +16,20 @@ import yabacaga.model.GameMaster;
 import yabacaga.model.Player;
 import yabacaga.model.Skill;
 
+/**
+ * Controller of the editor interface.
+ * 
+ * @author Mattéo Camin
+ * @author Sylvan Courtiol
+ */
 public class EditorController {
-	
+	/** First card modified by this */
 	private Card card = new Card(0, "first card");
+	
+	/** Second card modified by this */
 	private Card card1 = new Card(1, "second card");
+	
+	/** Third card modified by this */
 	private Card card2 = new Card(2, "third card");
 
     @FXML
@@ -221,6 +231,9 @@ public class EditorController {
     	System.out.println("Joeur envoyé au serveur (stub)");
     }
     
+    /**
+     * Update the editor border panel.
+     */
     void update() {
         nameField.setText(card.getName());
         nameField1.setText(card1.getName());
@@ -241,10 +254,16 @@ public class EditorController {
         updateCostInformation();
     }
     
+    /**
+     * Update cost information displayed with costLabel.
+     */
     void updateCostInformation() {
     	costLabel.setText(String.format("Deck cost: %d/%d (remaining points: %d)", getDeckCost(), GameMaster.MAX_DECK_COST, GameMaster.MAX_DECK_COST - getDeckCost()));
     }
     
+    /**
+     * @return the cost of the edited deck.
+     */
     int getDeckCost() {
     	return card.getCost() + card1.getCost() + card2.getCost();
     }
