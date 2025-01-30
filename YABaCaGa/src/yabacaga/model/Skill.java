@@ -1,5 +1,8 @@
 package yabacaga.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Power of a card that changes some statistics.
  * The statistics changed can be : 
@@ -20,6 +23,7 @@ public class Skill {
 	
 	public static final float NEUTRAL_MODIFIER = 1.0f;
 	public static final int NEUTRAL_BONUS = 0;
+	public static final float MODIFIER_COST_UNIT = 0.1f;
 	
 	private float powerModifier = NEUTRAL_MODIFIER;
 	
@@ -39,8 +43,33 @@ public class Skill {
 	
 	private int runePoison = NEUTRAL_BONUS;
 	
+	public static List<Skill> getSkills() {
+		List<Skill> skills = new ArrayList<>();
+		
+		Skill s = new Skill();
+		s.setPowerModifier(1.2f);
+		skills.add(s);
+		
+		s = new Skill();
+		s.setPowerModifier(1.1f);
+		s.setDamageModifier(1.1f);
+		skills.add(s);
+		
+		s = new Skill();
+		s.setRunePayback(1);
+		skills.add(s);
+		
+		return skills;
+	}
+	
 	public int getCost() {
-		return 1; // TODO stub
+		return powerBonus + attackBonus + damageBonus + runePayback + runePoison 
+				+ costFromModifier(powerModifier) + costFromModifier(attackModifier) + costFromModifier(damageModifier);
+	}
+	
+	private int costFromModifier(float modifier) {
+		float MARGIN = 0.001f;
+		return (int) Math.ceil((Math.abs(modifier - NEUTRAL_MODIFIER) - MARGIN) / MODIFIER_COST_UNIT);
 	}
 	
 	public float getPowerModifier() {
@@ -114,5 +143,43 @@ public class Skill {
 	public void setRunePoison(int runePoison) {
 		this.runePoison = runePoison;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder result = new StringBuilder();
+		
+        if (powerModifier != NEUTRAL_MODIFIER) {
+        	result.append(String.format("power * %3.2f\n", powerModifier));
+        }
+        if (powerBonus != NEUTRAL_BONUS) {
+        	result.append(String.format("power + %d\n", powerBonus));
+        }
+        if (attackModifier != NEUTRAL_MODIFIER) {
+        	result.append(String.format("attack * %3.2f\n", attackModifier));
+        }
+        if (attackBonus != NEUTRAL_BONUS) {
+        	result.append(String.format("attack + %d\n", attackBonus));
+        }
+        if (damageModifier != NEUTRAL_MODIFIER) {
+        	result.append(String.format("damage * %3.2f\n", damageModifier));
+        }
+        if (damageBonus != NEUTRAL_BONUS) {
+        	result.append(String.format("damage + %d\n", damageBonus));
+        }
+        if (damageRevenge != NEUTRAL_BONUS) {
+        	result.append(String.format("damage revenge: %d\n", damageRevenge));
+        }
+        if (runePayback != NEUTRAL_BONUS) {
+        	result.append(String.format("rune Payback: %d\n", runePayback));
+        }
+        if (runePoison != NEUTRAL_BONUS) {
+        	result.append(String.format("rune poison: %d\n", runePoison));
+        }
+		result.append(String.format("Cost: %d\n", getCost()));
+		
+		return result.toString();
+	}
+	
+	
 	
 }

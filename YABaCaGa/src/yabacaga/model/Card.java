@@ -28,7 +28,7 @@ public class Card {
 	}
 
 	public int getCost() {
-		return 1; // TODO stub
+		return (skill != null ? skill.getCost() : 0)  + power + damage - 2;
 	}
 
 	public String getName() {
@@ -44,6 +44,9 @@ public class Card {
 	}
 
 	public void setPower(int power) {
+		if (power < MIN_STAT) {
+			throw new IllegalArgumentException();
+		}
 		this.power = power;
 	}
 
@@ -52,6 +55,9 @@ public class Card {
 	}
 
 	public void setDamage(int damage) {
+		if (damage < MIN_STAT) {
+			throw new IllegalArgumentException();
+		}
 		this.damage = damage;
 	}
 
