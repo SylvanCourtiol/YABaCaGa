@@ -52,5 +52,9 @@ public class Player {
 	public void setHealthPoints(int healthPoints) {
 		this.healthPoints = healthPoints;
 	}
+
+	public List<Card> getDeck() {
+		return deck;
+	}
 	
 }
