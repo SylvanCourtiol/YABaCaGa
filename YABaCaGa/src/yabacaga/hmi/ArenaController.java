@@ -209,6 +209,22 @@ public class ArenaController {
     	Bet toSend = bet;
     	state = state == State.BET_1 ? State.WAIT_END_BET_1 : state == State.BET_2 ? State.WAIT_END_BET_2 : state == State.BET_3 ? State.WAIT_END_BET_3 : state;
     	update();
+    	// TODO enlever apres tests
+//    	ArenaController arena = this;
+//    	Thread t = new Thread() {
+//    	      public void run() {
+//    	    	try {
+//					Thread.sleep(3000);
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//    	    	player.setHealthPoints(player.getHealthPoints() - 1);
+//    	    	opponent.setRunes(opponent.getRunes() - 2);
+//    	        arena.nextState(player, opponent);
+//    	      }
+//    	    };
+//    	    t.start();
     }
     
     @FXML
@@ -232,7 +248,7 @@ public class ArenaController {
     	this.setPlayer(player);
     	this.setOpponent(opponent);
     	
-    	state = State.BET_2;
+    	state = State.BET_1;
         
         update();
     }
@@ -316,7 +332,7 @@ public class ArenaController {
     	betValueLabel.setText(Integer.toString(bet.getRunes()));
     	
     	// update rage
-    	rageCheckbox.setText(String.format("Rage (cost %d runes)", Bet.RAGE_COST));
+    	rageCheckbox.setText(String.format("Rage (cost: %d runes)", Bet.RAGE_COST));
     	
     	boolean isBettingOk = (state == State.BET_1 || state == State.BET_2 || state == State.BET_3);
     	cardComboBox.setDisable(!isBettingOk);
@@ -381,11 +397,22 @@ public class ArenaController {
     }
     
     String powerValueString(Card c) {
-    	return String.format("%d (base %d)", (int)(c.getPower() * c.getSkill().getPowerModifier() + c.getSkill().getPowerBonus()), c.getPower());
+    	return String.format("%d (base: %d)", (int)((c.getPower() + c.getSkill().getPowerBonus()) * c.getSkill().getPowerModifier()), c.getPower());
     }
     
     String damageValueString(Card c) {
-    	return String.format("%d (base %d)", (int)(c.getDamage() * c.getSkill().getDamageModifier() + c.getSkill().getDamageBonus()), c.getDamage());
+    	return String.format("%d (base: %d)", (int)((c.getDamage() + c.getSkill().getDamageBonus()) * c.getSkill().getDamageModifier()), c.getDamage());
+    }
+    
+    public void nextState(Player player, Player opponent) {
+    	state = state == State.WAIT_END_BET_1 ? State.BET_2 
+    			: state == State.WAIT_END_BET_2 ? State.BET_3 
+    					: state == State.WAIT_END_BET_3 ? State.END 
+    							: state == State.END ? State.INIT 
+    									: state;
+    	this.player = this.opponent = null;
+    	setPlayer(player);
+    	setOpponent(opponent);
     }
 
 }
