@@ -414,7 +414,7 @@
                 "version": ""
             },
             {
-                "className": "Server",
+                "className": "ServerYABaCaGa",
                 "color": 0,
                 "definition": {
                     "outputs": [
@@ -443,22 +443,7 @@
                                     "type": "DATA"
                                 }
                             ],
-                            "name": "enterPlayer",
-                            "replies": [
-                                {
-                                    "arguments": [
-                                        {
-                                            "name": "isOk",
-                                            "type": "BOOL"
-                                        },
-                                        {
-                                            "name": "playerId",
-                                            "type": "INTEGER"
-                                        }
-                                    ],
-                                    "name": "isPlayerOk"
-                                }
-                            ]
+                            "name": "enterPlayer"
                         },
                         {
                             "arguments": [
@@ -479,18 +464,7 @@
                                     "type": "BOOL"
                                 }
                             ],
-                            "name": "receiveBet",
-                            "replies": [
-                                {
-                                    "arguments": [
-                                        {
-                                            "name": "isOk",
-                                            "type": "BOOL"
-                                        }
-                                    ],
-                                    "name": "isBetOk"
-                                }
-                            ]
+                            "name": "receiveBet"
                         }
                     ]
                 },
@@ -502,19 +476,71 @@
                 "version": ""
             },
             {
-                "className": "Client",
+                "className": "ClientYABaCaGa",
                 "color": 0,
                 "definition": {
-                    "inputs": [
+                    "services": [
                         {
-                            "name": "receiveFromServer",
-                            "type": "DATA"
-                        }
-                    ],
-                    "outputs": [
+                            "arguments": [
+                                {
+                                    "name": "playerID",
+                                    "type": "INTEGER"
+                                }
+                            ],
+                            "name": "acceptPlayer"
+                        },
                         {
-                            "name": "sendToServer",
-                            "type": "DATA"
+                            "arguments": [
+                                {
+                                    "name": "firstPlayer",
+                                    "type": "BOOL"
+                                },
+                                {
+                                    "name": "players",
+                                    "type": "DATA"
+                                }
+                            ],
+                            "name": "receiveGameInfo"
+                        },
+                        {
+                            "arguments": [
+                                {
+                                    "name": "returnCode",
+                                    "type": "INTEGER"
+                                }
+                            ],
+                            "name": "acceptBet"
+                        },
+                        {
+                            "arguments": [
+                                {
+                                    "name": "returnCode",
+                                    "type": "INTEGER"
+                                },
+                                {
+                                    "name": "players",
+                                    "type": "DATA"
+                                }
+                            ],
+                            "name": "receiveDuelResult"
+                        },
+                        {
+                            "arguments": [
+                                {
+                                    "name": "winner",
+                                    "type": "DATA"
+                                }
+                            ],
+                            "name": "receiveGameResult"
+                        },
+                        {
+                            "arguments": [
+                                {
+                                    "name": "runes",
+                                    "type": "INTEGER"
+                                }
+                            ],
+                            "name": "receiveOpponentBet"
                         }
                     ]
                 },
@@ -590,45 +616,6 @@
         {
             "children": [
                 {
-                    "agent": {
-                    },
-                    "class": "7700e712-ab00-4cd3-ab5c-d5e7bfe3718c",
-                    "comment": "",
-                    "height": 100,
-                    "name": "AI",
-                    "simulationTime": 5000,
-                    "uuid": "9d2ce334-9e3b-4107-9d72-19d2280b0800",
-                    "width": 250,
-                    "x": 412.19048174780994,
-                    "y": -15.609487232241236
-                },
-                {
-                    "agent": {
-                    },
-                    "class": "b06facba-315d-4be8-9860-1064c2867b00",
-                    "comment": "",
-                    "height": 100,
-                    "name": "Player2",
-                    "simulationTime": 5000,
-                    "uuid": "4e432ea6-9a2c-4f67-94ae-a9ca80b762b6",
-                    "width": 250,
-                    "x": -222.94544727549078,
-                    "y": 435.40306356062956
-                },
-                {
-                    "agent": {
-                    },
-                    "class": "b06facba-315d-4be8-9860-1064c2867b00",
-                    "comment": "",
-                    "height": 100,
-                    "name": "Player1",
-                    "simulationTime": 5000,
-                    "uuid": "9ac5290c-2cfd-42bc-8aa0-fe37035e805f",
-                    "width": 250,
-                    "x": 21.01323053690396,
-                    "y": 226.0434730812565
-                },
-                {
                     "data": {
                         "data_decoder": "BINARY",
                         "msg_type": "",
@@ -640,8 +627,8 @@
                     "tool": "com.ingescape.circle.tool.observer",
                     "uuid": "767d0232-ba57-46d2-bdec-fdc3d0f8b64e",
                     "width": 270,
-                    "x": 905.9739072665934,
-                    "y": 55.89862672905599
+                    "x": 1049.2005587529088,
+                    "y": 56.70327083852965
                 },
                 {
                     "agent": {
@@ -652,13 +639,6 @@
                                 "ip": "172.22.224.176",
                                 "isAttachedToCircle": false,
                                 "uuid": "2813c87b-ca64-4605-9e5f-9dcb43b6c9dc"
-                            },
-                            {
-                                "commandLine": "C:\\Users\\sylva\\Documents\\WS\\IHM\\Whiteboard\\Whiteboard.exe",
-                                "hostname": "LAPTOP-JB0J06CC",
-                                "ip": "192.168.56.1",
-                                "isAttachedToCircle": false,
-                                "uuid": "db4c7738-9153-4b23-9319-9b5102bd64f0"
                             },
                             {
                                 "commandLine": "C:\\Users\\sylva\\Documents\\WS\\IHM\\Whiteboard\\Whiteboard.exe",
@@ -673,6 +653,13 @@
                                 "ip": "127.0.0.1",
                                 "isAttachedToCircle": false,
                                 "uuid": "1ff2beaa-ea0d-404f-9ff1-d5ab74fcca7f"
+                            },
+                            {
+                                "commandLine": "C:\\Users\\sylva\\Documents\\WS\\IHM\\Whiteboard\\Whiteboard.exe",
+                                "hostname": "LAPTOP-JB0J06CC",
+                                "ip": "192.168.56.1",
+                                "isAttachedToCircle": false,
+                                "uuid": "db4c7738-9153-4b23-9319-9b5102bd64f0"
                             }
                         ]
                     },
@@ -695,6 +682,13 @@
                                 "ip": "127.0.0.1",
                                 "isAttachedToCircle": false,
                                 "uuid": "0226e2ea-5a91-4f31-9965-c47b137ca30e"
+                            },
+                            {
+                                "commandLine": "\"C:\\Program Files\\Ingescape\\Ingescape Circle v4\\igsProxy.exe\" --port 5473 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/33787/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
+                                "hostname": "DESKTOP-HE6BILN",
+                                "ip": "127.0.0.1",
+                                "isAttachedToCircle": false,
+                                "uuid": "365011cd-45af-4302-b788-ceeb5a06548b"
                             }
                         ]
                     },
@@ -705,8 +699,8 @@
                     "simulationTime": 5000,
                     "uuid": "0f698e9c-94df-4d84-9f48-df7192d668ae",
                     "width": 250,
-                    "x": 419.49238567953137,
-                    "y": 270.3504670703276
+                    "x": 393.7431705673696,
+                    "y": 347.59811240681216
                 },
                 {
                     "agent": {
@@ -717,6 +711,20 @@
                                 "ip": "127.0.0.1",
                                 "isAttachedToCircle": false,
                                 "uuid": "26ed8c5b-4900-4183-9b40-e91f5c47c600"
+                            },
+                            {
+                                "commandLine": "\"C:/Program Files/Ingescape/Ingescape Circle v4/igsProxy.exe\" --port 5473 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/33787/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
+                                "hostname": "DESKTOP-HE6BILN",
+                                "ip": "127.0.0.1",
+                                "isAttachedToCircle": false,
+                                "uuid": "7d920f9e-f0bd-437a-8f5a-8a0b1ba2acc7"
+                            },
+                            {
+                                "commandLine": "\"C:\\Program Files\\Ingescape\\Ingescape Circle v4\\igsProxy.exe\" --port 5473 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/33787/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
+                                "hostname": "DESKTOP-HE6BILN",
+                                "ip": "127.0.0.1",
+                                "isAttachedToCircle": false,
+                                "uuid": "186b39c7-6c3a-4534-92a8-1411bf7a5076"
                             },
                             {
                                 "commandLine": "\"C:/Program Files/Ingescape/Ingescape Circle v4/igsProxy.exe\" --port 5473 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/33787/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
@@ -733,8 +741,52 @@
                     "simulationTime": 5000,
                     "uuid": "d027553e-bb4f-4054-a287-a637d392c349",
                     "width": 250,
-                    "x": -1.755500667239744,
-                    "y": 648.1246734530272
+                    "x": -75.9132401902649,
+                    "y": 629.5852385722709
+                },
+                {
+                    "agent": {
+                        "instances": [
+                            {
+                                "commandLine": "\"C:\\Program Files\\Ingescape\\Ingescape Circle v4\\igsProxy.exe\" --port 5473 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/33787/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
+                                "hostname": "DESKTOP-HE6BILN",
+                                "ip": "127.0.0.1",
+                                "isAttachedToCircle": false,
+                                "uuid": "e335e607-1bf0-4fdd-a0e6-5e8bb7458e3f"
+                            }
+                        ]
+                    },
+                    "class": "b06facba-315d-4be8-9860-1064c2867b00",
+                    "comment": "",
+                    "height": 100,
+                    "name": "Player_Michel",
+                    "simulationTime": 5000,
+                    "uuid": "b4c438f0-c548-406e-8558-b9cc1d2ba31c",
+                    "width": 250,
+                    "x": -240.060374943282,
+                    "y": 243.00202204022753
+                },
+                {
+                    "agent": {
+                        "instances": [
+                            {
+                                "commandLine": "\"C:\\Program Files\\Ingescape\\Ingescape Circle v4\\igsProxy.exe\" --port 5473 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/33787/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
+                                "hostname": "DESKTOP-HE6BILN",
+                                "ip": "127.0.0.1",
+                                "isAttachedToCircle": false,
+                                "uuid": "8929056f-3baa-41da-9f02-b4843669802e"
+                            }
+                        ]
+                    },
+                    "class": "b06facba-315d-4be8-9860-1064c2867b00",
+                    "comment": "",
+                    "height": 100,
+                    "name": "Player_Pierre",
+                    "simulationTime": 5000,
+                    "uuid": "3a264916-3cba-4ff4-ad50-a2fd4263633b",
+                    "width": 250,
+                    "x": 370.2197933135368,
+                    "y": 460.31644664826
                 }
             ],
             "links": {
