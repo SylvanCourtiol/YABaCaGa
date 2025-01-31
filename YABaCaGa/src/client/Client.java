@@ -1,67 +1,205 @@
 package client;
 
 import java.io.IOException;
-import java.nio.file.*;
 import java.util.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ingescape.*;
 import callbacks.*;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import util.Blobizer;
+import yabacaga.hmi.EditorController;
+import yabacaga.model.GameMaster;
+import yabacaga.model.Player;
 
 public class Client implements AgentEventListener, WebSocketEventListener {
 
 	private static Logger _logger = LoggerFactory.getLogger(Client.class);
 
-	public Client() {}
+	private static final String SERVER_AGENT_NAME = "YABaCaGaServer";
 
-	@Override
-	public void handleAgentEvent(Agent agent, AgentEvent event, String uuid, String name, Object eventData) {
-		_logger.debug("**received agent event for {} ({}): {} with data {}", name, uuid, event, eventData);
+	private static Client CLIENT_INSTANCE = null;
+
+	private Agent agent;
+
+	private Stage primaryStage;
+
+	private Player player = null;
+
+	private EditorController editor = null;
+
+	private Player opponent = null;
+
+	private boolean firstPlayer = false;
+
+	private boolean serverOk = false;
+
+	private Client(String port, String name, Stage primaryStage) {
+		this.primaryStage = primaryStage;
+		_logger.info("Start Java app 'Client'");
+		_logger.info("is DEBUG enabled ? {}", _logger.isDebugEnabled());
+
+		Global globalContext = new Global("ws://127.0.0.1:" + port);
+		ClientServiceCallback clientCB = new ClientServiceCallback(this);
+
+		globalContext.observeWebSocketEvents(this);
+
+		Agent agent = globalContext.agentCreate("Player_" + name);
+		agent.observeAgentEvents(this);
+		this.agent = agent;
+
+		agent.definition.setClass("ClientYABaCaGa");
+
+		agent.serviceInit("acceptPlayer", clientCB);
+		agent.serviceArgAdd("acceptPlayer", "playerID", IopType.IGS_INTEGER_T);
+
+		agent.serviceInit("receiveGameInfo", clientCB);
+		agent.serviceArgAdd("receiveGameInfo", "firstPlayer", IopType.IGS_BOOL_T);
+		agent.serviceArgAdd("receiveGameInfo", "players", IopType.IGS_DATA_T);
+
+		agent.serviceInit("acceptBet", clientCB);
+		agent.serviceArgAdd("acceptBet", "returnCode", IopType.IGS_INTEGER_T);
+
+		agent.serviceInit("receiveOpponentBet", clientCB);
+		agent.serviceArgAdd("receiveOpponentBet", "runes", IopType.IGS_INTEGER_T);
+
+		agent.serviceInit("receiveDuelResult", clientCB);
+		agent.serviceArgAdd("receiveDuelResult", "returnCode", IopType.IGS_INTEGER_T);
+		agent.serviceArgAdd("receiveDuelResult", "players", IopType.IGS_DATA_T);
+
+		agent.serviceInit("receiveGameResult", clientCB);
+		agent.serviceArgAdd("receiveGameResult", "winner", IopType.IGS_DATA_T);
+
+		agent.start();
+
 	}
 
 	@Override
 	public void handleWebSocketEvent(WebSocketEvent event, Throwable t) {
 		if (t != null) {
 			_logger.error("**received web socket event {} with exception {}", event, t.toString());
-		}
-		else {
+		} else {
 			_logger.debug("**received web socket event {}", event);
 		}
 	}
 
-	public static void main(String[] args) throws InterruptedException {
+	@Override
+	public void handleAgentEvent(Agent agent, AgentEvent event, String uuid, String name, Object eventData) {
+		_logger.debug("**received agent event for {} ({}): {} with data {}", name, uuid, event, eventData);
+		if (name.equals(Client.SERVER_AGENT_NAME) && event == AgentEvent.IGS_AGENT_ENTERED) {
+			this.serverOk = true;
+			this.openDialog("Server Up");
+		} else if (name.equals(Client.SERVER_AGENT_NAME) && event == AgentEvent.IGS_AGENT_EXITED) {
+			this.serverOk = false;
+			this.openDialog("Server Down");
+		}
+	}
 
-        _logger.info("Start Java app 'Client'");
-        _logger.info("is DEBUG enabled ? {}", _logger.isDebugEnabled());
+	public Agent getAgent() {
+		return this.agent;
+	}
 
-    	Global globalContext = new Global("ws://localhost:12345");
+	public Player getPlayer() {
+		return this.player;
+	}
 
-        InputCallback inputCB = new InputCallback();
+	public Player getOpponent() {
+		return this.opponent;
+	}
 
-    	Client Client = new Client();
-        globalContext.observeWebSocketEvents(Client);
+	public boolean getFirstPlayer() {
+		return this.firstPlayer;
+	}
 
-        Agent agent = globalContext.agentCreate("Client");
-		agent.observeAgentEvents(Client);
+	public void enterPlayer(Player player, EditorController editor) {
+		if (this.serverOk) {
+			List<Object> args = new ArrayList<Object>();
+			try {
+				args.add(Blobizer.toString(player));
+				this.player = player;
+				this.editor = editor;
+				editor.lockOptions();
+				this.agent.serviceCall(SERVER_AGENT_NAME, "enterPlayer", args, "");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			this.openDialog("Server Down");
+		}
+	}
 
-		agent.definition.setClass("Client");
+	public void acceptPlayer(int newId) {
+		if (this.editor != null) {
+			String message = "";
+			if (newId > 0) {
+				this.player.setId(newId);
+				openDialog("Your request to play has been accepted ! Waiting for other player...");
+			} else {
+				String cause = newId == GameMaster.TOO_EXPENSIVE_ERROR ? "Deck too expensive"
+						: newId == GameMaster.ALREADY_ENTERED_ERROR ? "You entered the game already"
+								: newId == GameMaster.TOO_MANY_PLAYER_ERROR ? "Too many players already in"
+										: "Unknown cause";
+				this.editor.unlockOptions();
+				openDialog("Your request has been denied ! Cause : " + cause);
+			}
+		}
+	}
 
-        agent.definition.inputCreate("receiveFromServer", IopType.IGS_DATA_T);
-        agent.observeInput("receiveFromServer", inputCB);
-        agent.definition.outputCreate("sendToServer", IopType.IGS_DATA_T);
+	public void receiveGameInfo(Boolean firstPlayer, Player player, Player opponent) {
+		this.player = player;
+		this.opponent = opponent;
+		this.firstPlayer = firstPlayer;
+		Platform.runLater(() -> {
+			try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/yabacaga/hmi/arena.fxml"));
+				BorderPane root = (BorderPane) loader.load();
+				Scene scene = new Scene(root, 1083, 1078);
+				scene.getStylesheets().add(getClass().getResource("/yabacaga/hmi/application.css").toExternalForm());
+				this.primaryStage.setTitle("YABaCaGa");
+				this.primaryStage.setScene(scene);
+				this.primaryStage.show();
 
-		agent.start();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+	}
 
-		System.out.println("Press Enter to stop the agent");
-		Scanner scanner = new Scanner(System.in);
-        try {
-            scanner.nextLine();
-        } catch(IllegalStateException | NoSuchElementException e) {
-            // System.in has been closed
-            System.out.println("System.in was closed; exiting");
-        }
+	public void openDialog(String message) {
+		Platform.runLater(() -> {
+			final Stage dialog = new Stage();
+			dialog.initModality(Modality.APPLICATION_MODAL);
+			dialog.initOwner(primaryStage);
+			VBox dialogVbox = new VBox(20);
+			dialogVbox.getChildren().add(new Text(message));
+			Scene dialogScene = new Scene(dialogVbox, 300, 200);
+			dialog.setScene(dialogScene);
+			dialog.show();
+		});
+	}
 
-        agent.stop();
-    }
+	public static Client getClient(String[] args, Stage primaryStage) {
+		String port = args[0];
+		String name = args[1];
+
+		if (Client.CLIENT_INSTANCE == null) {
+			Client.CLIENT_INSTANCE = new Client(port, name, primaryStage);
+		}
+		return Client.CLIENT_INSTANCE;
+	}
+
+	public static Client getClient() {
+		return Client.CLIENT_INSTANCE;
+	}
+
 }

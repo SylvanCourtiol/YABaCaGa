@@ -1,13 +1,20 @@
 package yabacaga.model;
 
+import java.io.Serializable;
+
 /**
  * Card of the game of YABaCaGa.
  * 
  * @author Mattéo Camin
  * @author Sylvan Courtiol
  */
-public class Card {
+public class Card implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4283027623751833518L;
+
 	/**
 	 * MIN_VALUE for the card's stats.
 	 */

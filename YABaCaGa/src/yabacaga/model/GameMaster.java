@@ -13,12 +13,17 @@ public class GameMaster {
 	public enum State {
 		WAITING_PLAYERS, WAITING_FIRST_BET, WAITING_SECOND_BET, MATCH_OVER
 	}
+	
 
 	public static final int DEFAULT_RUNES = 20;
 	public static final int DEFAULT_HEALTH_POINTS = 20;
 
 	public static final int MAX_DECK_COST = 20;
 	public static final int DECK_SIZE = 3;
+	
+	public static final int TOO_EXPENSIVE_ERROR = -20;
+	public static final int TOO_MANY_PLAYER_ERROR = -21;
+	public static final int ALREADY_ENTERED_ERROR = -22;
 
 	private final PropertyChangeSupport support;
 	private Map<Integer, Player> players = new HashMap<Integer, Player>();
@@ -68,7 +73,7 @@ public class GameMaster {
 	 *         otherwise
 	 */
 	public int enterPlayer(Player player) {
-		int returnCode = -1; // -20 : deck too expensive, -2 : player already entered (network dupe), -1 :
+		int returnCode = TOO_MANY_PLAYER_ERROR; // -20 : deck too expensive, -2 : player already entered (network dupe), -1 :
 								// too many players/game started
 		if (this.state == State.WAITING_PLAYERS || this.players.size() < 2) {
 			if (!this.players.containsValue(player)) {
@@ -83,10 +88,10 @@ public class GameMaster {
 					support.firePropertyChange("player", null, player);
 					returnCode = newId;
 				} else {
-					returnCode = -20;
+					returnCode = TOO_EXPENSIVE_ERROR;
 				}
 			} else {
-				returnCode = -2;
+				returnCode = ALREADY_ENTERED_ERROR;
 			}
 		}
 		return returnCode;

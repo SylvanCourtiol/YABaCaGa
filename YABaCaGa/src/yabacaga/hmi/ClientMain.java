@@ -1,7 +1,13 @@
 package yabacaga.hmi;
 	
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 
+import client.Client;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -15,9 +21,12 @@ import javafx.fxml.FXMLLoader;
  * @author Sylvan Courtiol
  */
 public class ClientMain extends Application {
+	
+	private static String NAME = null;
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			Client.getClient(new String[]{"8080", ClientMain.NAME}, primaryStage);
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/yabacaga/hmi/editor.fxml"));
 			//loader.setController(new EditorController());
 			BorderPane root = (BorderPane)loader.load();
@@ -26,12 +35,16 @@ public class ClientMain extends Application {
 			primaryStage.setTitle("YABaCaGa");
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public static void main(String[] args) {
-		launch(args);
+		ClientMain.NAME = args[0];
+		String[] arguments = Arrays.copyOfRange(args, 1, args.length);
+		launch(arguments);
 	}
 }

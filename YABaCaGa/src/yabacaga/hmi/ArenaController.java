@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import client.Client;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,6 +28,7 @@ public class ArenaController {
 	
 	private Player player = null;
 	private Player opponent = null;
+	private boolean firstPlayer = false;
 	
 	private State state = State.INIT;
 	private State lastState = State.INIT;
@@ -41,6 +43,11 @@ public class ArenaController {
 
 	public void setOpponent(Player opponent) {
 		this.opponent = opponent;
+		update();
+	}
+	
+	public void setFirstPlayer(boolean firstPlayer) {
+		this.firstPlayer = firstPlayer;
 		update();
 	}
 
@@ -228,28 +235,15 @@ public class ArenaController {
     
     @FXML
     private void initialize() {
-    	// TODO enlever après TEST
-    	List<Card> playerDeck = new ArrayList<Card>();
-    	playerDeck.add(new Card(0, "carteP1"));
-    	playerDeck.add(new Card(0, "carteP2"));
-    	playerDeck.add(new Card(0, "carteP3"));
-    	Player player = new Player("playerTest", playerDeck);
-    	player.play(player.getDeck().get(0));
-    	player.getDeck().get(0).setSkill(Skill.getSkills().get(0));
+    	state = State.INIT;
     	
-    	List<Card> opponentDeck = new ArrayList<Card>();
-    	opponentDeck.add(new Card(0, "carteO1"));
-    	opponentDeck.add(new Card(0, "carteO2"));
-    	opponentDeck.add(new Card(0, "carteO3"));
-    	Player opponent = new Player("opponentTest", opponentDeck);
-    	opponent.play(opponent.getDeck().get(1));
-    	
-    	this.setPlayer(player);
-    	this.setOpponent(opponent);
-        
-    	state = State.BET_1;
+    	this.player = Client.getClient().getPlayer();
+    	this.opponent = Client.getClient().getOpponent();
+    	this.firstPlayer = Client.getClient().getFirstPlayer();
     	
     	update();
+    	
+    	nextState(this.player, this.opponent);
     }
     
     void update() {
@@ -273,32 +267,41 @@ public class ArenaController {
     	
     	updateMiddleText();
     	
+    	if (this.firstPlayer && (this.state == State.WAIT_END_BET_1 || this.state == State.BET_2 || this.state == State.WAIT_END_BET_3) ||
+    			!this.firstPlayer && (this.state == State.BET_1 || this.state == State.WAIT_END_BET_2 || this.state == State.BET_3) || this.state == State.INIT) {
+    		this.lockSend();
+    	} else {
+    		this.unlockSend();
+    	}
+    	
     	lastState = state;
     }
     
     void updateMiddleText() {
     	String text;
+    	Player firstPlayer = this.firstPlayer ? this.player : this.opponent;
+    	Player secondPlayer = this.firstPlayer ? this.opponent : this.player;
     	switch (state) {
     	case INIT :
     		text = "YABaCaGa will start soon!";
     		break;
     	case BET_1 : 
-    		text = "Turn 1: make your bet!";
+    		text = "Turn 1: " +  firstPlayer.getName() + " make your bet";
     		break;
     	case WAIT_END_BET_1:
-    		text = "Turn 1: waiting for the opponent's bet.";
+    		text = "Turn 1: " +  secondPlayer.getName() + " make your bet";
     		break;
     	case BET_2:
-    		text = "Turn 2: it's time to bet!";
+    		text = "Turn 2: " +  secondPlayer.getName() + " make your bet";
     		break;
     	case WAIT_END_BET_2: 
-    		text = "Turn 2: waiting for your slow oppoenent.";
+    		text = "Turn 2: " +  firstPlayer.getName() + " make your bet";
     		break;
     	case BET_3:
-    		text = "Turn 3: Your last chance to bet well!";
+    		text = "Turn 3: " +  firstPlayer.getName() + " make your bet";
     		break;
     	case WAIT_END_BET_3:
-    		text = "Turn 3: Please wait again.";
+    		text = "Turn 3: " +  secondPlayer.getName() + " make your bet";
     	case END:
     		text = "The end! " + (player.getHealthPoints() >= opponent.getHealthPoints() ? "The victory is yours." : "No victory for you today.");
     		break;
@@ -403,17 +406,29 @@ public class ArenaController {
     }
     
     public void nextState(Player player, Player opponent) {
-    	state = state == State.WAIT_END_BET_1 ? State.BET_2 
-    			: state == State.WAIT_END_BET_2 ? State.BET_3 
-    					: state == State.WAIT_END_BET_3 ? State.END 
-    							: state == State.END ? State.INIT 
-    									: state;
+    	state = State.values()[(state.ordinal()+1)%State.values().length];
     	if (player.getHealthPoints() <= 0 || opponent.getHealthPoints() <= 0) {
     		state = State.END;
     	}
     	this.player = this.opponent = null;
     	setPlayer(player);
     	setOpponent(opponent);
+    }
+    
+    public void lockSend() {
+    	this.sendBetButton.setDisable(true);
+    	this.incrementBetButton.setDisable(true);
+    	this.decrementBetButton.setDisable(true);
+    	this.rageCheckbox.setDisable(true);
+    	this.cardComboBox.setDisable(true);
+    }
+    
+    public void unlockSend() {
+    	this.sendBetButton.setDisable(false);
+    	this.incrementBetButton.setDisable(false);
+    	this.decrementBetButton.setDisable(false);
+    	this.rageCheckbox.setDisable(false);
+    	this.cardComboBox.setDisable(false);
     }
 
 }

@@ -1,7 +1,9 @@
 package yabacaga.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * Power of a card that changes some statistics.
@@ -19,8 +21,13 @@ import java.util.List;
  * @author Mattéo Camin
  * @author Sylvan Courtiol
  */
-public class Skill {
+public class Skill implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5842303676007863491L;
+
 	/**
 	 * Value of the neutral element for a modifier.
 	 */
@@ -98,6 +105,9 @@ public class Skill {
 		
 		s = new Skill();
 		s.setRunePayback(1);
+		skills.add(s);
+		
+		s = new Skill(); //Neutral skill
 		skills.add(s);
 		
 		return skills;
