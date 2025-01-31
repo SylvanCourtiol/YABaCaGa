@@ -291,8 +291,9 @@ public class ArenaController {
     		break;
     	case WAIT_END_BET_3:
     		text = "Turn 3: " +  secondPlayer.getName() + " make your bet";
+    		break;
     	case END:
-    		text = "The end! " + (player.getHealthPoints() >= opponent.getHealthPoints() ? "The victory is yours." : "No victory for you today.");
+    		text = "The end! " + (player.getHealthPoints() > opponent.getHealthPoints() ? "The victory is yours.": player.getHealthPoints() < opponent.getHealthPoints() ? "You've lost that game !" : "No victory for either of you today.");
     		break;
     	default:
     		text = "Oops, not yet implemented.";
@@ -396,13 +397,17 @@ public class ArenaController {
     
     public void acceptBet() {
     	if (this.state == State.BET_1 || this.state == State.BET_2 || this.state == State.BET_3) {
+    		System.out.println(this.state);
     		state = State.values()[(state.ordinal()+1)%State.values().length];
+    		System.out.println(this.state);
         	update();
     	}
     }
     
     public void nextState(Player player, Player opponent) {
+    	System.out.println(this.state);
     	state = State.values()[(state.ordinal()+1)%State.values().length];
+    	System.out.println(this.state);
     	if (player.getHealthPoints() <= 0 || opponent.getHealthPoints() <= 0) {
     		state = State.END;
     	}

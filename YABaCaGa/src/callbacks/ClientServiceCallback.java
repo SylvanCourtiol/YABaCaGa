@@ -79,11 +79,34 @@ public class ClientServiceCallback implements ServiceListener {
 				break;
 			}
 			case "receiveDuelResult": {
+				if (arguments.size() == 2) {
+					if (arguments.get(0) instanceof Integer result && arguments.get(1) instanceof String s) {
+						Object o = Blobizer.fromString(s);
+						if (o instanceof Object[] playerList && playerList.length == 2 && playerList[0] instanceof Player) {
+							Player p1 = (Player) playerList[0];
+							Player p2 = (Player) playerList[1];
+							Player player = null;
+							Player opponent = null;
+							if (p1.getId() == functionHandler.getPlayer().getId()) {
+								player = p1;
+								opponent = p2;
+							} else {
+								player = p2;
+								opponent = p1;
+							}
+							functionHandler.receiveDuelResult(result, player, opponent);
+						}
 
+					}
+				}
 				break;
 			}
 			case "receiveGameResult": {
-
+				if (arguments.size() == 1) {
+					if (arguments.get(0) instanceof Integer) {
+						functionHandler.receiveGameResult((int) arguments.get(0));
+					}
+				}
 				break;
 			}
 			default:

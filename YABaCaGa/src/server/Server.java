@@ -128,6 +128,7 @@ public class Server implements AgentEventListener, WebSocketEventListener, Prope
 	}
 
 	public void receiveBet(Agent agent, String caller, int playerId, int cardId, int runes, boolean rage) {
+		System.out.println(caller + " cardId : " + cardId);
 		if (playersAgentName.containsKey(playerId) && cardId >= 0 && cardId < GameMaster.DECK_SIZE) {
 			int returnCode = model.receiveBet(playerId, cardId, runes, rage);
 			if (returnCode != GameMaster.NOT_A_PLAYER_BET_ERROR && returnCode != GameMaster.NOT_PLAYER_TURN_ERROR
@@ -163,7 +164,9 @@ public class Server implements AgentEventListener, WebSocketEventListener, Prope
 							e1.printStackTrace();
 						}
 					}
-					this.model.finishGame();
+					if (this.model.getState() == State.MATCH_OVER) {
+						this.model.finishGame();
+					}
 				}
 			} else {
 				List<Object> args = new ArrayList<>();

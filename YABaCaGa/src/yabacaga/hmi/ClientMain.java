@@ -36,6 +36,10 @@ public class ClientMain extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			
+			primaryStage.setOnCloseRequest(e -> {
+				Client.getClient().getAgent().stop();
+				System.exit(0);
+			});
 			
 		} catch(Exception e) {
 			e.printStackTrace();

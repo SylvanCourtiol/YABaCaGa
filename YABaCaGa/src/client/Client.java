@@ -38,7 +38,7 @@ public class Client implements AgentEventListener, WebSocketEventListener {
 	private Player player = null;
 
 	private EditorController editor = null;
-	
+
 	private ArenaController arena = null;
 
 	private Player opponent = null;
@@ -123,7 +123,7 @@ public class Client implements AgentEventListener, WebSocketEventListener {
 	public boolean getFirstPlayer() {
 		return this.firstPlayer;
 	}
-	
+
 	public void setArena(ArenaController arena) {
 		this.arena = arena;
 	}
@@ -180,7 +180,7 @@ public class Client implements AgentEventListener, WebSocketEventListener {
 			}
 		});
 	}
-	
+
 	public void sendBet(Bet bet, ArenaController arena) {
 		if (this.serverOk) {
 			this.arena = arena;
@@ -190,11 +190,11 @@ public class Client implements AgentEventListener, WebSocketEventListener {
 			args.add(bet.getCardId());
 			args.add(bet.getRunes());
 			args.add(bet.isRage());
-			
+
 			this.agent.serviceCall(SERVER_AGENT_NAME, "receiveBet", args, "");
 		}
 	}
-	
+
 	public void acceptBet(int returnCode) {
 		if (this.arena != null) {
 			if (returnCode >= 0) {
@@ -202,22 +202,46 @@ public class Client implements AgentEventListener, WebSocketEventListener {
 			}
 		} else {
 			String cause = returnCode == GameMaster.NOT_PLAYER_TURN_ERROR ? "This is not your turn"
-					: returnCode == GameMaster.NOT_A_PLAYER_BET_ERROR ? "You're not part of the game (how did you get here ?)"
+					: returnCode == GameMaster.NOT_A_PLAYER_BET_ERROR
+							? "You're not part of the game (how did you get here ?)"
 							: returnCode == GameMaster.NOT_A_CORRECT_BET_ERROR ? "This bet is not correct"
 									: "Unknown cause";
 			openDialog("Your bet has been denied ! Cause : " + cause);
 		}
 	}
-	
+
 	public void receiveOpponentBet(int cardId) {
 		if (this.arena != null && this.opponent != null && this.player != null) {
-			System.out.println("Receive Bet ok");
 			if (cardId >= 0 && cardId < GameMaster.DECK_SIZE) {
 				Player opponent = this.arena.getOpponent();
 				opponent.play(opponent.getDeck().get(cardId));
 				Player player = this.arena.getPlayer();
-				this.arena.nextState(player, opponent);
+				Platform.runLater(() -> {
+					this.arena.nextState(player, opponent);
+				});
 			}
+		}
+	}
+
+	public void receiveDuelResult(Integer result, Player player, Player opponent) {
+		if (this.arena != null && this.opponent != null && this.player != null) {
+			String message = result == GameMaster.BATTLE_TIE ? "This duel is a tie !"
+					: result == player.getId() ? "You won this duel !"
+							: result == opponent.getId() ? "Your opponent won this duel !" : "Unknown duel result";
+			openDialog(message);
+			Platform.runLater(() -> {
+				this.arena.nextState(player, opponent);
+			});
+		}
+	}
+
+	public void receiveGameResult(int winnerId) {
+		if (this.arena != null && this.opponent != null && this.player != null) {
+			String message = winnerId == GameMaster.GAME_TIE ? "The game is a tie"
+					: winnerId == player.getId() ? "You won the game !"
+							: winnerId == opponent.getId() ? "Your opponent won this game !" : "Unknown game result";
+			openDialog(message);
+			this.arena.lockSend();
 		}
 	}
 

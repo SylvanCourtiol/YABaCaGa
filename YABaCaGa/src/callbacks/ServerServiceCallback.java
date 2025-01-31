@@ -31,9 +31,7 @@ public class ServerServiceCallback implements ServiceListener {
 
 		switch (serviceName) {
 		case "enterPlayer": {
-			System.out.println("Test Service Reçu");
 			if (arguments.size() == 1 && arguments.get(0) instanceof String) {
-				System.out.println("Test Nb Arguments and String Ok");
 				try {
 					Object o = Blobizer.fromString((String)arguments.get(0));
 					if (o instanceof Player) {
