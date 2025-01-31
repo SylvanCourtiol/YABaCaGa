@@ -155,7 +155,7 @@ public class GameMaster {
 		return returnCode;
 
 	}
-	
+  
 	public int finishGame() {
 		this.turn = 1;
 		this.state = State.WAITING_PLAYERS;
@@ -208,6 +208,7 @@ public class GameMaster {
 			boolean winnerRage = firstCardAttack > secondCardAttack ? this.firstBet.isRage() : secondBet.isRage();
 			
 			int damageInflicted = computeDamage(winnerRage, winningSkill, winningCard.getDamage());
+
 			losingPlayer.setHealthPoints(losingPlayer.getHealthPoints() - damageInflicted);
 			
 			winningPlayer.setHealthPoints(winningPlayer.getHealthPoints() - losingSkill.getDamageRevenge());

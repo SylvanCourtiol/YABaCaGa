@@ -1,8 +1,8 @@
 package yabacaga.model;
 
 public class Bet {
-	
-	public static final int RAGE_COST = 3;
+
+  public static final int RAGE_COST = 3;
 	public static final int RAGE_BONUS = 2;
 	
 	private int playerId;
