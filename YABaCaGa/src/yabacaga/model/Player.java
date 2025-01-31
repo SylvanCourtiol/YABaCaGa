@@ -15,7 +15,7 @@ public class Player {
 	
 	private List<Card> deck = new ArrayList<Card>();
 	
-	private List<Card> played = new ArrayList<Card>();
+	private List<Integer> played = new ArrayList<>();
 
 	public Player(String name, List<Card> deck) {
 		super();
@@ -63,15 +63,16 @@ public class Player {
 		if (!deck.contains(card)) {
 			throw new IllegalArgumentException();
 		}
-		played.add(card);
-	}
-	
-	public List<Card> getDeck() {
-		return deck;
+		played.add(deck.indexOf(card));
+		played.sort((a, b) ->  a - b);
 	}
 	
 	public List<Card> getPlayedCards() {
-		return played;
+		List<Card> result = new ArrayList<Card>();
+		for (int i : played) {
+			result.add(deck.get(i));
+		}
+		return result;
 	}
 	
 }

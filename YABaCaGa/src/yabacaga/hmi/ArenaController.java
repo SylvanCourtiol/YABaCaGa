@@ -211,19 +211,19 @@ public class ArenaController {
     	state = state == State.BET_1 ? State.WAIT_END_BET_1 : state == State.BET_2 ? State.WAIT_END_BET_2 : state == State.BET_3 ? State.WAIT_END_BET_3 : state;
     	update();
     	// TODO enlever apres tests
-//    	ArenaController arena = this;
-//    	Platform.runLater(() -> {
-//    		try {
-//				Thread.sleep(3000);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//	    	player.setHealthPoints(player.getHealthPoints() - 1);
-//	    	opponent.setRunes(opponent.getRunes() - 2);
-//	    	opponent.setHealthPoints(0);
-//	        arena.nextState(player, opponent);
-//    	});
+    	ArenaController arena = this;
+    	Platform.runLater(() -> {
+    		try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    	player.setHealthPoints(player.getHealthPoints() - 1);
+	    	opponent.setRunes(opponent.getRunes() - 2);
+	    	opponent.setHealthPoints(0);
+	        arena.nextState(player, opponent);
+    	});
     }
     
     @FXML
