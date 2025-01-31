@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane minHeight="667.0" minWidth="1083.0" prefHeight="1078.0" prefWidth="1083.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="yabacaga.hmi.ArenaController">
+   <bottom>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+               <padding>
+                  <Insets bottom="50.0" left="100.0" top="5.0" />
+               </padding>
+               <children>
+                  <Pane maxHeight="350.0" maxWidth="250.0" minHeight="350.0" minWidth="250.0" prefHeight="350.0" prefWidth="250.0" styleClass="card">
+                     <children>
+                        <Rectangle fx:id="card1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="140.0" layoutX="5.0" layoutY="35.0" stroke="BLACK" strokeType="INSIDE" width="240.0" />
+                        <Text fx:id="powerValueP1Label" layoutX="160.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="CENTER" wrappingWidth="75.26873779296875" />
+                        <Text layoutX="14.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Power" />
+                        <Text fx:id="damageValueP1Label" layoutX="159.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="CENTER" wrappingWidth="76.86871337890625" />
+                        <Text layoutX="14.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Damage" />
+                        <Text layoutX="14.0" layoutY="288.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Skill" />
+                        <Text fx:id="cardP1NameLabel" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="cardName" wrappingWidth="121.33673095703125" />
+                        <Text fx:id="cardP1SkillLabel" layoutX="75.0" layoutY="288.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No skill" textAlignment="RIGHT" wrappingWidth="158.13671875" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="110.0" layoutY="15.0" maxHeight="350.0" maxWidth="250.0" minHeight="350.0" minWidth="250.0" prefHeight="350.0" prefWidth="250.0" styleClass="card">
+                     <children>
+                        <Rectangle fx:id="card11" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="140.0" layoutX="5.0" layoutY="35.0" stroke="BLACK" strokeType="INSIDE" width="240.0" />
+                        <Text fx:id="powerValueP2Label" layoutX="160.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="CENTER" wrappingWidth="75.26873779296875" />
+                        <Text layoutX="14.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Power" />
+                        <Text fx:id="damageValueP2Label" layoutX="159.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="CENTER" wrappingWidth="76.86871337890625" />
+                        <Text layoutX="14.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Damage" />
+                        <Text layoutX="14.0" layoutY="288.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Skill" />
+                        <Text fx:id="cardP2NameLabel" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="cardName" wrappingWidth="121.33673095703125" />
+                        <Text fx:id="cardP2SkillLabel" layoutX="75.0" layoutY="288.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No skill" textAlignment="RIGHT" wrappingWidth="158.13671875" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="411.0" layoutY="15.0" maxHeight="350.0" maxWidth="250.0" minHeight="350.0" minWidth="250.0" prefHeight="350.0" prefWidth="250.0" styleClass="card">
+                     <children>
+                        <Rectangle fx:id="card111" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="140.0" layoutX="5.0" layoutY="35.0" stroke="BLACK" strokeType="INSIDE" width="240.0" />
+                        <Text fx:id="powerValueP3Label" layoutX="160.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="CENTER" wrappingWidth="75.26873779296875" />
+                        <Text layoutX="14.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Power" />
+                        <Text fx:id="damageValueP3Label" layoutX="159.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="CENTER" wrappingWidth="76.86871337890625" />
+                        <Text layoutX="14.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Damage" />
+                        <Text layoutX="14.0" layoutY="288.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Skill" />
+                        <Text fx:id="cardP3NameLabel" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="cardName" wrappingWidth="121.33673095703125" />
+                        <Text fx:id="cardP3SkillLabel" layoutX="75.0" layoutY="288.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No skill" textAlignment="RIGHT" wrappingWidth="158.13671875" />
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+            <Pane minHeight="75.0" prefHeight="75.0" prefWidth="1083.0">
+               <children>
+                  <Text layoutX="69.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a card:" />
+                  <ComboBox fx:id="cardComboBox" layoutX="156.0" layoutY="25.0" onAction="#cardSelected" prefHeight="25.0" prefWidth="190.0" promptText="Choose a card" />
+                  <Text layoutX="406.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bet some runes:" />
+                  <Text fx:id="betValueLabel" layoutX="530.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="23.26873779296875" />
+                  <Button fx:id="decrementBetButton" layoutX="509.0" layoutY="25.0" mnemonicParsing="false" onAction="#decrementBet" text="-" />
+                  <Button fx:id="incrementBetButton" layoutX="553.0" layoutY="25.0" mnemonicParsing="false" onAction="#incrementBet" text="+" />
+                  <CheckBox fx:id="rageCheckbox" layoutX="654.0" layoutY="29.0" mnemonicParsing="false" onAction="#rageSelection" text="Rage (cost: 3 runes)" />
+                  <Button fx:id="sendBetButton" layoutX="861.0" layoutY="25.0" mnemonicParsing="false" onAction="#sendBet" text="Send your bet" />
+               </children>
+            </Pane>
+            <Pane minHeight="75.0" prefHeight="75.0">
+               <children>
+                  <Text fx:id="playerNameLabel" layoutX="99.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player " wrappingWidth="249.07337188720703">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="playerHPLabel" layoutX="406.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HP: 10" wrappingWidth="252.93283081054688">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="playerRunesLabel" layoutX="699.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Runes: 10" wrappingWidth="355.50634765625">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+   </bottom>
+   <top>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <Pane prefHeight="75.0">
+               <children>
+                  <Text fx:id="opponentNameLabel" layoutX="99.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Opponent" wrappingWidth="249.07337188720703">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="opponentHPLabel" layoutX="406.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HP: 10" wrappingWidth="252.93283081054688">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="opponentRunesLabel" layoutX="708.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Runes: 10" wrappingWidth="249.1063232421875">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <HBox spacing="50.0">
+               <padding>
+                  <Insets left="100.0" top="5.0" />
+               </padding>
+               <children>
+                  <Pane maxHeight="350.0" maxWidth="250.0" minHeight="350.0" minWidth="250.0" prefHeight="350.0" prefWidth="250.0" styleClass="card">
+                     <children>
+                        <Rectangle fx:id="card11" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="140.0" layoutX="5.0" layoutY="35.0" stroke="BLACK" strokeType="INSIDE" width="240.0" />
+                        <Text fx:id="powerValueO1Label" layoutX="160.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="CENTER" wrappingWidth="75.26873779296875" />
+                        <Text layoutX="14.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Power" />
+                        <Text fx:id="damageValueO1Label" layoutX="159.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="CENTER" wrappingWidth="76.86871337890625" />
+                        <Text layoutX="14.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Damage" />
+                        <Text layoutX="14.0" layoutY="288.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Skill" />
+                        <Text fx:id="cardO1NameLabel" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="cardName" wrappingWidth="121.33673095703125" />
+                        <Text fx:id="cardO1SkillLabel" layoutX="75.0" layoutY="288.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No skill" textAlignment="RIGHT" wrappingWidth="158.13671875" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="110.0" layoutY="15.0" maxHeight="350.0" maxWidth="250.0" minHeight="350.0" minWidth="250.0" prefHeight="350.0" prefWidth="250.0" styleClass="card">
+                     <children>
+                        <Rectangle fx:id="card111" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="140.0" layoutX="5.0" layoutY="35.0" stroke="BLACK" strokeType="INSIDE" width="240.0" />
+                        <Text fx:id="powerValueO2Label" layoutX="160.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="CENTER" wrappingWidth="75.26873779296875" />
+                        <Text layoutX="14.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Power" />
+                        <Text fx:id="damageValueO2Label" layoutX="159.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="CENTER" wrappingWidth="76.86871337890625" />
+                        <Text layoutX="14.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Damage" />
+                        <Text layoutX="14.0" layoutY="288.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Skill" />
+                        <Text fx:id="cardO2NameLabel" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="cardName" wrappingWidth="121.33673095703125" />
+                        <Text fx:id="cardO2SkillLabel" layoutX="75.0" layoutY="288.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No skill" textAlignment="RIGHT" wrappingWidth="158.13671875" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="411.0" layoutY="15.0" maxHeight="350.0" maxWidth="250.0" minHeight="350.0" minWidth="250.0" prefHeight="350.0" prefWidth="250.0" styleClass="card">
+                     <children>
+                        <Rectangle fx:id="card1111" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="140.0" layoutX="5.0" layoutY="35.0" stroke="BLACK" strokeType="INSIDE" width="240.0" />
+                        <Text fx:id="powerValueO3Label" layoutX="160.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="CENTER" wrappingWidth="75.26873779296875" />
+                        <Text layoutX="14.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Power" />
+                        <Text fx:id="damageValueO3Label" layoutX="159.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="CENTER" wrappingWidth="76.86871337890625" />
+                        <Text layoutX="14.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Damage" />
+                        <Text layoutX="14.0" layoutY="288.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Skill" />
+                        <Text fx:id="cardO3NameLabel" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="cardName" wrappingWidth="121.33673095703125" />
+                        <Text fx:id="cardO3SkillLabel" layoutX="75.0" layoutY="288.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No skill" textAlignment="RIGHT" wrappingWidth="158.13671875" />
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <Pane minHeight="75.0" prefHeight="75.0" BorderPane.alignment="CENTER">
+         <children>
+            <Text fx:id="middleTextLabel" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="YABaCaGa will start soon!" textAlignment="CENTER" wrappingWidth="1082.9367122650146">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </Pane>
+   </center>
+</BorderPane>
