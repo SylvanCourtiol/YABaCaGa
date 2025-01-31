@@ -417,31 +417,9 @@
                 "className": "Server",
                 "color": 0,
                 "definition": {
-                    "inputs": [
-                        {
-                            "name": "receiveFromPlayer",
-                            "type": "DATA"
-                        },
-                        {
-                            "name": "image",
-                            "type": "DATA"
-                        }
-                    ],
                     "outputs": [
                         {
-                            "name": "sendToPlayer",
-                            "type": "DATA"
-                        },
-                        {
-                            "name": "prompt",
-                            "type": "STRING"
-                        },
-                        {
                             "name": "title",
-                            "type": "STRING"
-                        },
-                        {
-                            "name": "backgroundColor",
                             "type": "STRING"
                         },
                         {
@@ -455,10 +433,64 @@
                         {
                             "name": "ui_command",
                             "type": "STRING"
+                        }
+                    ],
+                    "services": [
+                        {
+                            "arguments": [
+                                {
+                                    "name": "player",
+                                    "type": "DATA"
+                                }
+                            ],
+                            "name": "enterPlayer",
+                            "replies": [
+                                {
+                                    "arguments": [
+                                        {
+                                            "name": "isOk",
+                                            "type": "BOOL"
+                                        },
+                                        {
+                                            "name": "playerId",
+                                            "type": "INTEGER"
+                                        }
+                                    ],
+                                    "name": "isPlayerOk"
+                                }
+                            ]
                         },
                         {
-                            "name": "labelsVisible",
-                            "type": "BOOL"
+                            "arguments": [
+                                {
+                                    "name": "playerId",
+                                    "type": "INTEGER"
+                                },
+                                {
+                                    "name": "cardId",
+                                    "type": "INTEGER"
+                                },
+                                {
+                                    "name": "runes",
+                                    "type": "INTEGER"
+                                },
+                                {
+                                    "name": "rage",
+                                    "type": "BOOL"
+                                }
+                            ],
+                            "name": "receiveBet",
+                            "replies": [
+                                {
+                                    "arguments": [
+                                        {
+                                            "name": "isOk",
+                                            "type": "BOOL"
+                                        }
+                                    ],
+                                    "name": "isBetOk"
+                                }
+                            ]
                         }
                     ]
                 },
@@ -560,32 +592,6 @@
                 {
                     "agent": {
                     },
-                    "class": "b06facba-315d-4be8-9860-1064c2867b00",
-                    "comment": "",
-                    "height": 100,
-                    "name": "Player2",
-                    "simulationTime": 5000,
-                    "uuid": "4e432ea6-9a2c-4f67-94ae-a9ca80b762b6",
-                    "width": 250,
-                    "x": -2.8856729502787175,
-                    "y": 365.2218382352917
-                },
-                {
-                    "agent": {
-                    },
-                    "class": "b06facba-315d-4be8-9860-1064c2867b00",
-                    "comment": "",
-                    "height": 100,
-                    "name": "Player1",
-                    "simulationTime": 5000,
-                    "uuid": "9ac5290c-2cfd-42bc-8aa0-fe37035e805f",
-                    "width": 250,
-                    "x": 6.5083406710324425,
-                    "y": 200.43050171077357
-                },
-                {
-                    "agent": {
-                    },
                     "class": "7700e712-ab00-4cd3-ab5c-d5e7bfe3718c",
                     "comment": "",
                     "height": 100,
@@ -598,66 +604,29 @@
                 },
                 {
                     "agent": {
-                        "instances": [
-                            {
-                                "commandLine": "C:\\Users\\sylva\\Documents\\WS\\IHM\\Whiteboard\\Whiteboard.exe",
-                                "hostname": "LAPTOP-JB0J06CC",
-                                "ip": "192.168.56.1",
-                                "isAttachedToCircle": false,
-                                "uuid": "db4c7738-9153-4b23-9319-9b5102bd64f0"
-                            },
-                            {
-                                "commandLine": "C:\\Users\\sylva\\Documents\\WS\\IHM\\Whiteboard\\Whiteboard.exe",
-                                "hostname": "LAPTOP-JB0J06CC",
-                                "ip": "127.0.0.1",
-                                "isAttachedToCircle": false,
-                                "uuid": "9b1f763d-4843-44b9-91f4-5c696f6d0a87"
-                            },
-                            {
-                                "commandLine": "/media/lucas/T7/repositories/projet_IHM/agents/Whiteboard/bin/Whiteboard",
-                                "hostname": "adell",
-                                "ip": "172.22.224.176",
-                                "isAttachedToCircle": false,
-                                "uuid": "2813c87b-ca64-4605-9e5f-9dcb43b6c9dc"
-                            }
-                        ]
                     },
-                    "class": "118ec52d-5aba-5ee0-baa7-ae34d567f092",
+                    "class": "b06facba-315d-4be8-9860-1064c2867b00",
                     "comment": "",
-                    "height": 202,
-                    "name": "Whiteboard",
+                    "height": 100,
+                    "name": "Player2",
                     "simulationTime": 5000,
-                    "uuid": "88a1d5c4-70a1-43d5-9073-97a385e1c40b",
-                    "width": 252,
-                    "x": 832.496406003375,
-                    "y": 292.8226345561536
+                    "uuid": "4e432ea6-9a2c-4f67-94ae-a9ca80b762b6",
+                    "width": 250,
+                    "x": -222.94544727549078,
+                    "y": 435.40306356062956
                 },
                 {
                     "agent": {
-                        "instances": [
-                            {
-                                "commandLine": "\"C:\\Program Files\\Ingescape\\Ingescape Circle v4\\igsProxy.exe\" --port 40500 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/sylva/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
-                                "hostname": "LAPTOP-JB0J06CC",
-                                "ip": "127.0.0.1",
-                                "isAttachedToCircle": false,
-                                "uuid": "342587f4-6416-40e0-8561-ca8cca0098c4"
-                            },
-                            {
-                                "commandLine": "\"C:/Program Files/Ingescape/Ingescape Circle v4/igsProxy.exe\" --port 40500 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/sylva/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
-                                "isAttachedToCircle": true,
-                                "uuid": "e6e6b7ad-e20c-44e0-8c4f-dfecd8873eb0"
-                            }
-                        ]
                     },
-                    "class": "48879EBE0FBC48D8B429F11510954D9B",
+                    "class": "b06facba-315d-4be8-9860-1064c2867b00",
                     "comment": "",
                     "height": 100,
-                    "name": "Proxy",
+                    "name": "Player1",
                     "simulationTime": 5000,
-                    "uuid": "d027553e-bb4f-4054-a287-a637d392c349",
+                    "uuid": "9ac5290c-2cfd-42bc-8aa0-fe37035e805f",
                     "width": 250,
-                    "x": -19.224080986602075,
-                    "y": 654.960204882343
+                    "x": 21.01323053690396,
+                    "y": 226.0434730812565
                 },
                 {
                     "data": {
@@ -671,15 +640,58 @@
                     "tool": "com.ingescape.circle.tool.observer",
                     "uuid": "767d0232-ba57-46d2-bdec-fdc3d0f8b64e",
                     "width": 270,
-                    "x": 773.444652726558,
-                    "y": 168.38947880808814
+                    "x": 905.9739072665934,
+                    "y": 55.89862672905599
+                },
+                {
+                    "agent": {
+                        "instances": [
+                            {
+                                "commandLine": "/media/lucas/T7/repositories/projet_IHM/agents/Whiteboard/bin/Whiteboard",
+                                "hostname": "adell",
+                                "ip": "172.22.224.176",
+                                "isAttachedToCircle": false,
+                                "uuid": "2813c87b-ca64-4605-9e5f-9dcb43b6c9dc"
+                            },
+                            {
+                                "commandLine": "C:\\Users\\sylva\\Documents\\WS\\IHM\\Whiteboard\\Whiteboard.exe",
+                                "hostname": "LAPTOP-JB0J06CC",
+                                "ip": "192.168.56.1",
+                                "isAttachedToCircle": false,
+                                "uuid": "db4c7738-9153-4b23-9319-9b5102bd64f0"
+                            },
+                            {
+                                "commandLine": "C:\\Users\\sylva\\Documents\\WS\\IHM\\Whiteboard\\Whiteboard.exe",
+                                "hostname": "DESKTOP-HE6BILN",
+                                "ip": "127.0.0.1",
+                                "isAttachedToCircle": false,
+                                "uuid": "9b1f763d-4843-44b9-91f4-5c696f6d0a87"
+                            },
+                            {
+                                "commandLine": "C:\\Users\\33787\\Downloads\\Whiteboard\\Whiteboard\\Whiteboard.exe",
+                                "hostname": "DESKTOP-HE6BILN",
+                                "ip": "127.0.0.1",
+                                "isAttachedToCircle": false,
+                                "uuid": "1ff2beaa-ea0d-404f-9ff1-d5ab74fcca7f"
+                            }
+                        ]
+                    },
+                    "class": "118ec52d-5aba-5ee0-baa7-ae34d567f092",
+                    "comment": "",
+                    "height": 290.94935796608263,
+                    "name": "Whiteboard",
+                    "simulationTime": 5000,
+                    "uuid": "88a1d5c4-70a1-43d5-9073-97a385e1c40b",
+                    "width": 292.865189347972,
+                    "x": 770.0433321379389,
+                    "y": 265.5352947269417
                 },
                 {
                     "agent": {
                         "instances": [
                             {
                                 "commandLine": "\"C:\\Program Files\\Ingescape\\Ingescape Circle v4\\igsProxy.exe\" --port 40500 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/sylva/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
-                                "hostname": "LAPTOP-JB0J06CC",
+                                "hostname": "DESKTOP-HE6BILN",
                                 "ip": "127.0.0.1",
                                 "isAttachedToCircle": false,
                                 "uuid": "0226e2ea-5a91-4f31-9965-c47b137ca30e"
@@ -693,65 +705,51 @@
                     "simulationTime": 5000,
                     "uuid": "0f698e9c-94df-4d84-9f48-df7192d668ae",
                     "width": 250,
-                    "x": 410.3071648469902,
-                    "y": 248.23905893910188
+                    "x": 419.49238567953137,
+                    "y": 270.3504670703276
+                },
+                {
+                    "agent": {
+                        "instances": [
+                            {
+                                "commandLine": "\"C:/Program Files/Ingescape/Ingescape Circle v4/igsProxy.exe\" --port 5473 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/33787/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
+                                "hostname": "DESKTOP-HE6BILN",
+                                "ip": "127.0.0.1",
+                                "isAttachedToCircle": false,
+                                "uuid": "26ed8c5b-4900-4183-9b40-e91f5c47c600"
+                            },
+                            {
+                                "commandLine": "\"C:/Program Files/Ingescape/Ingescape Circle v4/igsProxy.exe\" --port 5473 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/33787/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
+                                "isAttachedToCircle": true,
+                                "uuid": "e6e6b7ad-e20c-44e0-8c4f-dfecd8873eb0"
+                            }
+                        ]
+                    },
+                    "class": "48879EBE0FBC48D8B429F11510954D9B",
+                    "color": 0,
+                    "comment": "",
+                    "height": 100,
+                    "name": "Proxy",
+                    "simulationTime": 5000,
+                    "uuid": "d027553e-bb4f-4054-a287-a637d392c349",
+                    "width": 250,
+                    "x": -1.755500667239744,
+                    "y": 648.1246734530272
                 }
             ],
             "links": {
                 "mappings": [
                     {
-                        "from": "YABaCaGaServer",
-                        "fromInput": "receiveFromPlayer",
-                        "to": "Player1",
-                        "toOutput": "sendToServer"
-                    },
-                    {
-                        "from": "YABaCaGaServer",
-                        "fromInput": "receiveFromPlayer",
-                        "to": "Player2",
-                        "toOutput": "sendToServer"
-                    },
-                    {
-                        "from": "Player1",
-                        "fromInput": "receiveFromServer",
+                        "from": "Whiteboard",
+                        "fromInput": "chatMessage",
                         "to": "YABaCaGaServer",
-                        "toOutput": "sendToPlayer"
-                    },
-                    {
-                        "from": "Player2",
-                        "fromInput": "receiveFromServer",
-                        "to": "YABaCaGaServer",
-                        "toOutput": "sendToPlayer"
-                    },
-                    {
-                        "from": "YABaCaGaServer",
-                        "fromInput": "image",
-                        "to": "AI",
-                        "toOutput": "image"
-                    },
-                    {
-                        "from": "AI",
-                        "fromInput": "prompt",
-                        "to": "YABaCaGaServer",
-                        "toOutput": "prompt"
+                        "toOutput": "chatMessage"
                     },
                     {
                         "from": "Whiteboard",
                         "fromInput": "title",
                         "to": "YABaCaGaServer",
                         "toOutput": "title"
-                    },
-                    {
-                        "from": "Whiteboard",
-                        "fromInput": "backgroundColor",
-                        "to": "YABaCaGaServer",
-                        "toOutput": "backgroundColor"
-                    },
-                    {
-                        "from": "Whiteboard",
-                        "fromInput": "chatMessage",
-                        "to": "YABaCaGaServer",
-                        "toOutput": "chatMessage"
                     },
                     {
                         "from": "Whiteboard",
@@ -764,12 +762,6 @@
                         "fromInput": "ui_command",
                         "to": "YABaCaGaServer",
                         "toOutput": "ui_command"
-                    },
-                    {
-                        "from": "Whiteboard",
-                        "fromInput": "labelsVisible",
-                        "to": "YABaCaGaServer",
-                        "toOutput": "labelsVisible"
                     }
                 ],
                 "others": [
@@ -779,10 +771,9 @@
                             "name": "wildcard",
                             "type": "INPUT"
                         },
-                        "source": "0f698e9c-94df-4d84-9f48-df7192d668ae",
+                        "source": "88a1d5c4-70a1-43d5-9073-97a385e1c40b",
                         "sourceIO": {
-                            "name": "chatMessage",
-                            "type": "OUTPUT"
+                            "type": "TRIGGER_OUT"
                         }
                     }
                 ]

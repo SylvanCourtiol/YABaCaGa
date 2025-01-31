@@ -54,6 +54,10 @@ public class Player {
 	public void setHealthPoints(int healthPoints) {
 		this.healthPoints = healthPoints;
 	}
+
+	public List<Card> getDeck() {
+		return deck;
+	}
 	
 	public void play(Card card) {
 		if (!deck.contains(card)) {
