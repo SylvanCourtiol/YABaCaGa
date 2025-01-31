@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -211,20 +212,18 @@ public class ArenaController {
     	update();
     	// TODO enlever apres tests
 //    	ArenaController arena = this;
-//    	Thread t = new Thread() {
-//    	      public void run() {
-//    	    	try {
-//					Thread.sleep(3000);
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//    	    	player.setHealthPoints(player.getHealthPoints() - 1);
-//    	    	opponent.setRunes(opponent.getRunes() - 2);
-//    	        arena.nextState(player, opponent);
-//    	      }
-//    	    };
-//    	    t.start();
+//    	Platform.runLater(() -> {
+//    		try {
+//				Thread.sleep(3000);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//	    	player.setHealthPoints(player.getHealthPoints() - 1);
+//	    	opponent.setRunes(opponent.getRunes() - 2);
+//	    	opponent.setHealthPoints(0);
+//	        arena.nextState(player, opponent);
+//    	});
     }
     
     @FXML
@@ -247,10 +246,10 @@ public class ArenaController {
     	
     	this.setPlayer(player);
     	this.setOpponent(opponent);
-    	
-    	state = State.BET_1;
         
-        update();
+    	state = State.BET_1;
+    	
+    	update();
     }
     
     void update() {
@@ -259,6 +258,7 @@ public class ArenaController {
     	}
     	updateCards();
     	
+    	updateBet();
     	
     	// update player stats
     	playerNameLabel.setText(player.getName());
@@ -270,8 +270,6 @@ public class ArenaController {
     	opponentNameLabel.setText(opponent.getName());
     	opponentHPLabel.setText("HP: " + opponent.getHealthPoints());
     	opponentRunesLabel.setText("Runes: " + opponent.getRunes());
-    	
-    	updateBet();
     	
     	updateMiddleText();
     	
@@ -312,7 +310,7 @@ public class ArenaController {
     
     void updateBet() {
     	// Update when last bet is replace by a new
-    	if (state != lastState && (state == State.BET_1 || state == State.BET_2 || state == State.BET_3)) {
+    	if (state != lastState && state != State.WAIT_END_BET_1 && state != State.WAIT_END_BET_2 && state != State.WAIT_END_BET_3) {
     		rageCheckbox.setSelected(false);
     		cardComboBox.setValue(null);
     		
@@ -410,6 +408,9 @@ public class ArenaController {
     					: state == State.WAIT_END_BET_3 ? State.END 
     							: state == State.END ? State.INIT 
     									: state;
+    	if (player.getHealthPoints() <= 0 || opponent.getHealthPoints() <= 0) {
+    		state = State.END;
+    	}
     	this.player = this.opponent = null;
     	setPlayer(player);
     	setOpponent(opponent);
