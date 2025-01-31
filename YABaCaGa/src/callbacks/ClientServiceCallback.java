@@ -36,7 +36,6 @@ public class ClientServiceCallback implements ServiceListener {
 						functionHandler.acceptPlayer((int) arguments.get(0));
 					}
 				}
-
 				break;
 			}
 			case "receiveGameInfo": {
@@ -63,11 +62,20 @@ public class ClientServiceCallback implements ServiceListener {
 				break;
 			}
 			case "acceptBet": {
+				if (arguments.size() == 1) {
+					if (arguments.get(0) instanceof Integer) {
+						functionHandler.acceptBet((int) arguments.get(0));
+					}
+				}
 
 				break;
 			}
 			case "receiveOpponentBet": {
-
+				if (arguments.size() == 1) {
+					if (arguments.get(0) instanceof Integer) {
+						functionHandler.receiveOpponentBet((int) arguments.get(0));
+					}
+				}
 				break;
 			}
 			case "receiveDuelResult": {

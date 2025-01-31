@@ -24,6 +24,13 @@ public class GameMaster {
 	public static final int TOO_EXPENSIVE_ERROR = -20;
 	public static final int TOO_MANY_PLAYER_ERROR = -21;
 	public static final int ALREADY_ENTERED_ERROR = -22;
+	
+	public static final int NOT_A_PLAYER_BET_ERROR = -1;
+	public static final int NOT_PLAYER_TURN_ERROR = -2;
+	public static final int NOT_A_CORRECT_BET_ERROR = -3;
+	
+	public static final int BATTLE_TIE = -333;
+	public static final int GAME_TIE = -999;
 
 	private final PropertyChangeSupport support;
 	private Map<Integer, Player> players = new HashMap<Integer, Player>();
@@ -116,7 +123,7 @@ public class GameMaster {
 	}
 
 	public int receiveBet(int playerId, int cardId, int runes, boolean rage) {
-		int returnCode = -1;
+		int returnCode = NOT_A_PLAYER_BET_ERROR;
 		if (this.players.containsKey(playerId)) {
 			if ((this.state == State.WAITING_FIRST_BET && playerId == this.firstPlayer)
 					|| (this.state == State.WAITING_SECOND_BET && playerId != this.firstPlayer && firstBet != null)) {
@@ -125,6 +132,7 @@ public class GameMaster {
 				if (bet.getCost() <= this.players.get(playerId).getRunes() || !this.playedCard.contains(p.getDeck().get(cardId))) {
 					returnCode = 0;
 					p.setRunes(p.getRunes() - bet.getCost());
+					p.play(p.getDeck().get(cardId));
 					switch (this.state) {
 					case State.WAITING_FIRST_BET: {
 						this.firstBet = bet;
@@ -150,10 +158,10 @@ public class GameMaster {
 						throw new IllegalArgumentException("Unexpected value: " + this.state);
 					}
 				} else {
-					returnCode = -3;
+					returnCode = NOT_A_CORRECT_BET_ERROR;
 				}
 			} else {
-				returnCode = -2;
+				returnCode = NOT_PLAYER_TURN_ERROR;
 			}
 		}
 
@@ -180,7 +188,7 @@ public class GameMaster {
 			if (firstPlayer.getHealthPoints() != secondPlayer.getHealthPoints()) {
 				returnCode = firstPlayer.getHealthPoints() > secondPlayer.getHealthPoints() ? firstPlayer.getId() : secondPlayer.getId();
 			} else {
-				returnCode = -999;
+				returnCode = GAME_TIE;
 			}
 			support.firePropertyChange("winner", null, returnCode);
 			this.state = State.MATCH_OVER;
@@ -190,7 +198,7 @@ public class GameMaster {
 	}
 
 	private int battle(Bet secondBet, int secondPlayerId) {
-		int returnCode = -333;
+		int returnCode = BATTLE_TIE;
 		
 		Player firstPlayer = this.players.get(this.firstPlayer);
 		Player secondPlayer = this.players.get(secondPlayerId);

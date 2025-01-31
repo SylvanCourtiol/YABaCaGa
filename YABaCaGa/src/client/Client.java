@@ -17,7 +17,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import util.Blobizer;
+import yabacaga.hmi.ArenaController;
 import yabacaga.hmi.EditorController;
+import yabacaga.model.Bet;
 import yabacaga.model.GameMaster;
 import yabacaga.model.Player;
 
@@ -36,6 +38,8 @@ public class Client implements AgentEventListener, WebSocketEventListener {
 	private Player player = null;
 
 	private EditorController editor = null;
+	
+	private ArenaController arena = null;
 
 	private Player opponent = null;
 
@@ -119,6 +123,10 @@ public class Client implements AgentEventListener, WebSocketEventListener {
 	public boolean getFirstPlayer() {
 		return this.firstPlayer;
 	}
+	
+	public void setArena(ArenaController arena) {
+		this.arena = arena;
+	}
 
 	public void enterPlayer(Player player, EditorController editor) {
 		if (this.serverOk) {
@@ -140,7 +148,6 @@ public class Client implements AgentEventListener, WebSocketEventListener {
 
 	public void acceptPlayer(int newId) {
 		if (this.editor != null) {
-			String message = "";
 			if (newId > 0) {
 				this.player.setId(newId);
 				openDialog("Your request to play has been accepted ! Waiting for other player...");
@@ -168,11 +175,50 @@ public class Client implements AgentEventListener, WebSocketEventListener {
 				this.primaryStage.setTitle("YABaCaGa");
 				this.primaryStage.setScene(scene);
 				this.primaryStage.show();
-
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		});
+	}
+	
+	public void sendBet(Bet bet, ArenaController arena) {
+		if (this.serverOk) {
+			this.arena = arena;
+			this.arena.lockSend();
+			List<Object> args = new ArrayList<>();
+			args.add(bet.getPlayerId());
+			args.add(bet.getCardId());
+			args.add(bet.getRunes());
+			args.add(bet.isRage());
+			
+			this.agent.serviceCall(SERVER_AGENT_NAME, "receiveBet", args, "");
+		}
+	}
+	
+	public void acceptBet(int returnCode) {
+		if (this.arena != null) {
+			if (returnCode >= 0) {
+				this.arena.acceptBet();
+			}
+		} else {
+			String cause = returnCode == GameMaster.NOT_PLAYER_TURN_ERROR ? "This is not your turn"
+					: returnCode == GameMaster.NOT_A_PLAYER_BET_ERROR ? "You're not part of the game (how did you get here ?)"
+							: returnCode == GameMaster.NOT_A_CORRECT_BET_ERROR ? "This bet is not correct"
+									: "Unknown cause";
+			openDialog("Your bet has been denied ! Cause : " + cause);
+		}
+	}
+	
+	public void receiveOpponentBet(int cardId) {
+		if (this.arena != null && this.opponent != null && this.player != null) {
+			System.out.println("Receive Bet ok");
+			if (cardId >= 0 && cardId < GameMaster.DECK_SIZE) {
+				Player opponent = this.arena.getOpponent();
+				opponent.play(opponent.getDeck().get(cardId));
+				Player player = this.arena.getPlayer();
+				this.arena.nextState(player, opponent);
+			}
+		}
 	}
 
 	public void openDialog(String message) {

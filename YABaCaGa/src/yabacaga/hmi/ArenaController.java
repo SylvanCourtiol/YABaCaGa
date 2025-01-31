@@ -215,22 +215,7 @@ public class ArenaController {
     @FXML
     void sendBet(ActionEvent event) {
     	Bet toSend = bet;
-    	state = state == State.BET_1 ? State.WAIT_END_BET_1 : state == State.BET_2 ? State.WAIT_END_BET_2 : state == State.BET_3 ? State.WAIT_END_BET_3 : state;
-    	update();
-    	// TODO enlever apres tests
-    	ArenaController arena = this;
-    	Platform.runLater(() -> {
-    		try {
-				Thread.sleep(3000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	    	player.setHealthPoints(player.getHealthPoints() - 1);
-	    	opponent.setRunes(opponent.getRunes() - 2);
-	    	opponent.setHealthPoints(0);
-	        arena.nextState(player, opponent);
-    	});
+    	Client.getClient().sendBet(toSend, this);
     }
     
     @FXML
@@ -240,6 +225,10 @@ public class ArenaController {
     	this.player = Client.getClient().getPlayer();
     	this.opponent = Client.getClient().getOpponent();
     	this.firstPlayer = Client.getClient().getFirstPlayer();
+    	
+    	if (!firstPlayer) {
+    		Client.getClient().setArena(this);
+    	}
     	
     	update();
     	
@@ -405,6 +394,13 @@ public class ArenaController {
     	return String.format("%d (base: %d)", (int)((c.getDamage() + c.getSkill().getDamageBonus()) * c.getSkill().getDamageModifier()), c.getDamage());
     }
     
+    public void acceptBet() {
+    	if (this.state == State.BET_1 || this.state == State.BET_2 || this.state == State.BET_3) {
+    		state = State.values()[(state.ordinal()+1)%State.values().length];
+        	update();
+    	}
+    }
+    
     public void nextState(Player player, Player opponent) {
     	state = State.values()[(state.ordinal()+1)%State.values().length];
     	if (player.getHealthPoints() <= 0 || opponent.getHealthPoints() <= 0) {
@@ -414,6 +410,14 @@ public class ArenaController {
     	setPlayer(player);
     	setOpponent(opponent);
     }
+    
+	public Player getPlayer() {
+		return player;
+	}
+
+	public Player getOpponent() {
+		return opponent;
+	}
     
     public void lockSend() {
     	this.sendBetButton.setDisable(true);

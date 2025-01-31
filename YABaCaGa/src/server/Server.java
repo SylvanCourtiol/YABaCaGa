@@ -61,7 +61,7 @@ public class Server implements AgentEventListener, WebSocketEventListener, Prope
 		}
 		case "battle": {
 			int code = (int) evt.getNewValue();
-			if (code != -333) {
+			if (code != GameMaster.BATTLE_TIE) {
 				Player winner = this.model.getPlayers().get(code);
 				agent.outputSetString("chatMessage",
 						winner.getName() + " won the duel of turn : " + this.model.getTurn());
@@ -72,7 +72,7 @@ public class Server implements AgentEventListener, WebSocketEventListener, Prope
 		}
 		case "winner": {
 			int code = (int) evt.getNewValue();
-			if (code == -999) {
+			if (code == GameMaster.GAME_TIE) {
 				agent.outputSetString("chatMessage", "It's a tie.");
 			} else {
 				Player player = this.model.getPlayers().get(code);
@@ -130,7 +130,8 @@ public class Server implements AgentEventListener, WebSocketEventListener, Prope
 	public void receiveBet(Agent agent, String caller, int playerId, int cardId, int runes, boolean rage) {
 		if (playersAgentName.containsKey(playerId) && cardId >= 0 && cardId < GameMaster.DECK_SIZE) {
 			int returnCode = model.receiveBet(playerId, cardId, runes, rage);
-			if (returnCode != -2 && returnCode != -3 && returnCode != -1) {
+			if (returnCode != GameMaster.NOT_A_PLAYER_BET_ERROR && returnCode != GameMaster.NOT_PLAYER_TURN_ERROR
+					&& returnCode != GameMaster.NOT_A_CORRECT_BET_ERROR) {
 				List<Object> args = new ArrayList<>();
 				if (this.model.getState() == State.WAITING_SECOND_BET) {
 					args.add(returnCode);
@@ -139,7 +140,7 @@ public class Server implements AgentEventListener, WebSocketEventListener, Prope
 					for (Entry<Integer, String> e : playersAgentName.entrySet()) {
 						args.clear();
 						if (e.getKey() != playerId) {
-							args.add(runes);
+							args.add(cardId);
 							agent.serviceCall(e.getValue(), "receiveOpponentBet", args, "");
 						}
 					}
@@ -147,25 +148,35 @@ public class Server implements AgentEventListener, WebSocketEventListener, Prope
 				} else {
 					for (Entry<Integer, String> e : playersAgentName.entrySet()) {
 						args.add(returnCode);
-						Map<Integer, Player> players = new HashMap<Integer, Player>(model.getPlayers());
-						args.addAll(players.values());
-						agent.serviceCall(e.getValue(), "receiveDuelResult", args, "");
-						if (this.model.getState() == State.MATCH_OVER) {
+						Object[] playerList = model.getPlayers().values().toArray();
+						try {
+							args.add(Blobizer.toString(playerList));
+							agent.serviceCall(e.getValue(), "receiveDuelResult", args, "");
+							if (this.model.getState() == State.MATCH_OVER) {
+								args.clear();
+								args.add(this.model.getWinningPlayer());
+								agent.serviceCall(e.getValue(), "receiveGameResult", args, "");
+							}
 							args.clear();
-							args.add(this.model.getWinningPlayer());
-							agent.serviceCall(e.getValue(), "receiveGameResult", args, "");
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
 						}
-						args.clear();
 					}
 					this.model.finishGame();
 				}
+			} else {
+				List<Object> args = new ArrayList<>();
+				args.add(returnCode);
+				agent.serviceCall(caller, "acceptBet", args, "");
 			}
 		}
 
 	}
 
 	private void beginGame(Agent agent, String caller, Player player) {
-		if (model.getPlayers().size() == 2 && model.getPlayers().keySet().equals(playersAgentName.keySet()) && model.getPlayers().containsValue(player)) {
+		if (model.getPlayers().size() == 2 && model.getPlayers().keySet().equals(playersAgentName.keySet())
+				&& model.getPlayers().containsValue(player)) {
 			try {
 				int firstPlayer = model.beginGame();
 				for (Entry<Integer, String> e : playersAgentName.entrySet()) {

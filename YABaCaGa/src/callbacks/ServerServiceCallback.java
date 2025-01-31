@@ -50,7 +50,7 @@ public class ServerServiceCallback implements ServiceListener {
 			break;
 		}
 		case "receiveBet": {
-			if (arguments.size() != 4) {
+			if (arguments.size() == 4) {
 				if (arguments.get(0) instanceof Integer && arguments.get(1) instanceof Integer
 						&& arguments.get(2) instanceof Integer && arguments.get(3) instanceof Boolean) {
 					functionHandler.receiveBet(agent, senderAgentName, (int) arguments.get(0), (int) arguments.get(1),
