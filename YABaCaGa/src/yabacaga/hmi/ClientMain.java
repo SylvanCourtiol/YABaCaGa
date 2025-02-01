@@ -1,12 +1,6 @@
 package yabacaga.hmi;
-	
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
 
+import java.util.Arrays;
 import client.Client;
 import javafx.application.Application;
 import javafx.stage.Stage;

@@ -2,10 +2,8 @@ package yabacaga.hmi;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
 import client.Client;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,8 +16,13 @@ import javafx.scene.text.Text;
 import yabacaga.model.Bet;
 import yabacaga.model.Card;
 import yabacaga.model.Player;
-import yabacaga.model.Skill;
 
+/**
+ * Contrôleur de l'interface de l'arène.
+ * 
+ * @author Mattéo Camin
+ * @author Sylvan Courtiol
+ */
 public class ArenaController {
 	
 	private enum State {

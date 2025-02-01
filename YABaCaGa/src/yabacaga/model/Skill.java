@@ -3,7 +3,6 @@ package yabacaga.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * Power of a card that changes some statistics.

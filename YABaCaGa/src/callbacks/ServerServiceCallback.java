@@ -12,6 +12,12 @@ import server.Server;
 import util.Blobizer;
 import yabacaga.model.Player;
 
+/**
+ * Gère les appels de services du serveur.
+ * 
+ * @author Mattéo Camin
+ * @author Sylvan Courtiol
+ */
 public class ServerServiceCallback implements ServiceListener {
 
 	private static Logger _logger = LoggerFactory.getLogger(ServerServiceCallback.class);

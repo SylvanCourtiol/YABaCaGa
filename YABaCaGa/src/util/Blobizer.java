@@ -8,6 +8,12 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Base64;
 
+/**
+ * Classe pour transformer un sérializable en bytes (string) pour l'envoi par Ingescape.
+ * 
+ * @author OscarRyz
+ * {@link}https://stackoverflow.com/questions/134492/how-to-serialize-an-object-into-a-string
+ */
 public class Blobizer {
 	/** Read the object from Base64 string. */
 	public static Object fromString(String s) throws IOException, ClassNotFoundException {

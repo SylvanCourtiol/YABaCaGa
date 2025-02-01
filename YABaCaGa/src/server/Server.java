@@ -3,7 +3,6 @@ package server;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import java.nio.file.*;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -18,14 +17,30 @@ import yabacaga.model.Card;
 import yabacaga.model.GameMaster;
 import yabacaga.model.GameMaster.State;
 import yabacaga.model.Player;
-import yabacaga.model.Skill;
 
+/**
+ * Le serveur, gère le modèle GameMaster et communique avec les clients et le whiteboard (possède l'agent Ingescape).
+ * 
+ * @author Mattéo Camin
+ * @author Sylvan Courtiol
+ */
 public class Server implements AgentEventListener, WebSocketEventListener, PropertyChangeListener {
 
 	private static Logger _logger = LoggerFactory.getLogger(Server.class);
 
+	/**
+	 * Modèle du jeu
+	 */
 	private GameMaster model;
+	
+	/**
+	 * Joueurs et leurs agents
+	 */
 	private Map<Integer, String> playersAgentName = new HashMap<Integer, String>();
+	
+	/**
+	 * Agent du serveur
+	 */
 	private Agent agent;
 
 	public Server(GameMaster model) {
@@ -34,6 +49,10 @@ public class Server implements AgentEventListener, WebSocketEventListener, Prope
 
 	}
 
+	/*
+	 * Contrôleur d'Event reçu du modèle pour savoir comment mettre à jour le
+	 * Whiteboard
+	 */
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		switch (evt.getPropertyName()) {
@@ -85,6 +104,9 @@ public class Server implements AgentEventListener, WebSocketEventListener, Prope
 		}
 	}
 
+	/**
+	 * MAJ du Whiteboard en affichant les joueurs et leurs cartes.
+	 */
 	public void updateWhiteboard() {
 		for (Player player : model.getPlayers().values()) {
 			agent.outputSetString("chatMessage",
@@ -105,7 +127,7 @@ public class Server implements AgentEventListener, WebSocketEventListener, Prope
 	@Override
 	public void handleAgentEvent(Agent agent, AgentEvent event, String uuid, String name, Object eventData) {
 		_logger.debug("**received agent event for {} ({}): {} with data {}", name, uuid, event, eventData);
-		
+
 		if (playersAgentName.containsValue(name) && event == AgentEvent.IGS_AGENT_EXITED) {
 			for (String s : playersAgentName.values()) {
 				if (!s.equals(name)) {
@@ -127,6 +149,14 @@ public class Server implements AgentEventListener, WebSocketEventListener, Prope
 		}
 	}
 
+	/**
+	 * Un joueur veut rentrer dans la partie. On envoie au joueur le résultat de sa
+	 * tentative.
+	 * 
+	 * @param agent  l'agent du serveur
+	 * @param caller le nom de l'agent du joueur
+	 * @param player le joueur
+	 */
 	public void enterPlayer(Agent agent, String caller, Player player) {
 		int newId = model.enterPlayer(player);
 		List<Object> args = new ArrayList<>();
@@ -138,6 +168,21 @@ public class Server implements AgentEventListener, WebSocketEventListener, Prope
 		this.beginGame(agent, caller, player);
 	}
 
+	/**
+	 * Un joueur a envoyé un pari. Si le pari est refusé on lui envoie le refus. Si
+	 * le pari est accepté :
+	 *   - Si c'est le premier pari du tour, on envoit au joueur l'acceptation du pari
+	 *   et à son opposant la carte qui a été joué.
+	 *   - Si c'est le deuxième pari du tour, on envoit aux deux joueurs le résultat du duel.
+	 *   - Si le match a été fini avec ce pari : on envoit au deux joueurs le résultat de la partie.
+	 * 
+	 * @param agent agent du serveur
+	 * @param caller nom de l'agent du joueur pariant
+	 * @param playerId id du joueur
+	 * @param cardId id de la carte du joueur
+	 * @param runes nombre de runes parié
+	 * @param rage si le joueur a utilisé une rage
+	 */
 	public void receiveBet(Agent agent, String caller, int playerId, int cardId, int runes, boolean rage) {
 		if (playersAgentName.containsKey(playerId) && cardId >= 0 && cardId < GameMaster.DECK_SIZE) {
 			int returnCode = model.receiveBet(playerId, cardId, runes, rage);
@@ -187,6 +232,17 @@ public class Server implements AgentEventListener, WebSocketEventListener, Prope
 
 	}
 
+	/**
+	 * Si le nombre de joueurs et les joueurs sont correct (dans la partie et avec un nom d'agent connu),
+	 * alors on les fait entrer dans le jeu. On envoit à chaque joueur toutes les infos de la partie :
+	 * -  Les autres joueurs.
+	 * - S'ils seront les premier à jouer.
+	 * 
+	 * 
+	 * @param agent agent du serveur
+	 * @param caller nom de l'agent du joueur
+	 * @param player le joueur
+	 */
 	private void beginGame(Agent agent, String caller, Player player) {
 		if (model.getPlayers().size() == 2 && model.getPlayers().keySet().equals(playersAgentName.keySet())
 				&& model.getPlayers().containsValue(player)) {
@@ -254,7 +310,7 @@ public class Server implements AgentEventListener, WebSocketEventListener, Prope
 			// System.in has been closed
 			System.out.println("System.in was closed; exiting");
 		}
-
+		scanner.close();
 		agent.stop();
 	}
 

@@ -10,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import yabacaga.model.Card;
 import yabacaga.model.GameMaster;
@@ -197,6 +196,23 @@ public class EditorController {
 	@FXML
 	void playerNameChanged(ActionEvent event) {
 		update();
+	}
+	
+	@FXML
+	void cardNameChanged(ActionEvent event) {
+		try {
+			TextField source = (TextField) event.getSource();
+			if (source == nameField) {
+				card.setName(source.getText());
+			} else if (source == nameField1) {
+				card1.setName(source.getText());
+			} else if (source == nameField2) {
+				card2.setName(source.getText());
+			}
+			update();
+		} catch (IllegalArgumentException e) {
+			// empty body
+		}
 	}
 
 	@FXML
