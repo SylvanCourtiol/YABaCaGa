@@ -1,9 +1,6 @@
 package tst;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +11,7 @@ import yabacaga.model.Card;
 import yabacaga.model.GameMaster;
 import yabacaga.model.Player;
 
-class GameMasterTest implements PropertyChangeListener {
+class GameMasterTest {
 
 	private GameMaster gm = null;
 	private Card card1 = null;
@@ -106,7 +103,8 @@ class GameMasterTest implements PropertyChangeListener {
 		p1.setId(gm.enterPlayer(p1));
 		p2.setId(gm.enterPlayer(p2));
 		
-		return gm.beginGame();
+		this.firstPlayer = gm.beginGame();
+		return this.firstPlayer;
 	}
 
 	@Test
@@ -134,7 +132,6 @@ class GameMasterTest implements PropertyChangeListener {
 	}
 	
 	int nominalFirstBet() {
-		firstPlayer = nominalGameBeginning();
 		int returnCode;
 		
 		if (firstPlayer == p1.getId()) {
@@ -147,6 +144,7 @@ class GameMasterTest implements PropertyChangeListener {
 	
 	@Test
 	void receiveBetTestFirstPlayerNominal() {
+		nominalGameBeginning();
 		int returnCode = nominalFirstBet();
 		assertEquals(0, returnCode);
 	}
@@ -196,32 +194,34 @@ class GameMasterTest implements PropertyChangeListener {
 	}
 	
 	int nominalSecondBet() {
-		nominalFirstBet();
 		int returnCode;
 		if (firstPlayer == p1.getId()) {
-			returnCode = gm.receiveBet(p2.getId(), card2.getId(), 1, false);
+			returnCode = gm.receiveBet(p2.getId(), card1.getId(), 1, false);
 		} else {
-			returnCode = gm.receiveBet(p1.getId(), card2.getId(), 1, false);
+			returnCode = gm.receiveBet(p1.getId(), card1.getId(), 1, false);
 		}
 		return returnCode;
 	}
 	
 	@Test
 	void receiveBetTestSecondPlayerNominalTie() {
+		nominalGameBeginning();
+		nominalFirstBet();
 		int returnCode = nominalSecondBet();
 		assertEquals(GameMaster.BATTLE_TIE, returnCode);
 	}
 	
 	@Test
 	void receiveBetTestSecondPlayerNominalWin() {
+		nominalGameBeginning();
 		nominalFirstBet();
 		int returnCode;
 		int expected;
 		if (firstPlayer == p1.getId()) {
-			returnCode = gm.receiveBet(p2.getId(), card2.getId(), 2, false);
+			returnCode = gm.receiveBet(p2.getId(), card1.getId(), 2, false);
 			expected = p2.getId();
 		} else {
-			returnCode = gm.receiveBet(p1.getId(), card2.getId(), 2, false);
+			returnCode = gm.receiveBet(p1.getId(), card1.getId(), 2, false);
 			expected = p1.getId();
 		}
 		assertEquals(expected, returnCode);
@@ -229,14 +229,15 @@ class GameMasterTest implements PropertyChangeListener {
 	
 	@Test
 	void receiveBetTestSecondPlayerNominalLose() {
+		nominalGameBeginning();
 		nominalFirstBet();
 		int returnCode;
 		int expected;
 		if (firstPlayer == p1.getId()) {
-			returnCode = gm.receiveBet(p2.getId(), card2.getId(), 0, false);
+			returnCode = gm.receiveBet(p2.getId(), card1.getId(), 0, false);
 			expected = p1.getId();
 		} else {
-			returnCode = gm.receiveBet(p1.getId(), card2.getId(), 0, false);
+			returnCode = gm.receiveBet(p1.getId(), card1.getId(), 0, false);
 			expected = p2.getId();
 		}
 		assertEquals(expected, returnCode);
@@ -244,18 +245,110 @@ class GameMasterTest implements PropertyChangeListener {
 	
 	@Test
 	void receiveBetTestSecondPlayerTooExpensive() {
+		nominalGameBeginning();
 		nominalFirstBet();
 		int returnCode;
 		if (firstPlayer == p1.getId()) {
-			returnCode = gm.receiveBet(p2.getId(), card2.getId(), GameMaster.DEFAULT_RUNES + 10, false);
+			returnCode = gm.receiveBet(p2.getId(), card1.getId(), GameMaster.DEFAULT_RUNES + 10, false);
 		} else {
-			returnCode = gm.receiveBet(p1.getId(), card2.getId(), GameMaster.DEFAULT_RUNES + 10, false);
+			returnCode = gm.receiveBet(p1.getId(), card1.getId(), GameMaster.DEFAULT_RUNES + 10, false);
 		}
 		assertEquals(GameMaster.NOT_A_CORRECT_BET_ERROR, returnCode);
 	}
 	
 	@Test
-	void receiveBetTestSecondTurnFirstBetAlreadyPlayedCard() {
+	void receiveBetTestSecondPlayerNotRightPlayer() {
+		nominalGameBeginning();
+		nominalFirstBet();
+		int returnCode;
+		if (firstPlayer == p1.getId()) {
+			returnCode = gm.receiveBet(p1.getId(), card1.getId(), 1, false);
+		} else {
+			returnCode = gm.receiveBet(p2.getId(), card1.getId(), 1, false);
+		}
+		assertEquals(GameMaster.NOT_PLAYER_TURN_ERROR, returnCode);
+	}
+	
+	@Test
+	void receiveBetTestAndFinishGameTestWinByDeath() {
+		p1.setHealthPoints(1);
+		p2.setHealthPoints(1);
+		nominalGameBeginning();
+		nominalFirstBet();
+		int returnCode;
+		int expectedWinner;
+		if (firstPlayer == p1.getId()) {
+			returnCode = gm.receiveBet(p2.getId(), card1.getId(), 2, false);
+			expectedWinner = p2.getId();
+		} else {
+			returnCode = gm.receiveBet(p1.getId(), card1.getId(), 2, false);
+			expectedWinner = p1.getId();
+		}
+		assertEquals(expectedWinner, returnCode);
+		assertEquals(expectedWinner, gm.finishGame());
+	}
+	
+	@Test
+	void receiveBetTestAndFinishGameTestWinByTurn() {
+		nominalGameBeginning();
+		nominalFirstBet(); //Turn 1
+		nominalSecondBet();
+		int returnCode;
+		int expectedWinner;
+		if (firstPlayer == p1.getId()) {
+			gm.receiveBet(p2.getId(), card2.getId(), 1, false); //Turn 2
+			gm.receiveBet(p1.getId(), card2.getId(), 1, false);
+			gm.receiveBet(p1.getId(), card3.getId(), 1, false); //Turn 3
+			
+			returnCode = gm.receiveBet(p2.getId(), card3.getId(), 2, false);
+			expectedWinner = p2.getId();
+		} else {
+			gm.receiveBet(p1.getId(), card2.getId(), 1, false); //Turn 2
+			gm.receiveBet(p2.getId(), card2.getId(), 1, false);
+			gm.receiveBet(p2.getId(), card3.getId(), 1, false); //Turn 3
+			
+			returnCode = gm.receiveBet(p1.getId(), card3.getId(), 2, false);
+			expectedWinner = p1.getId();
+		}
+		assertEquals(expectedWinner, returnCode);
+		assertEquals(expectedWinner, gm.finishGame());
+	}
+	
+	@Test
+	void receiveBetTestAndFinishGameTestEquality() {
+		nominalGameBeginning();
+		nominalFirstBet(); //Turn 1
+		nominalSecondBet();
+		int returnCode;
+		if (firstPlayer == p1.getId()) {
+			gm.receiveBet(p2.getId(), card2.getId(), 1, false); //Turn 2
+			gm.receiveBet(p1.getId(), card2.getId(), 1, false);
+			gm.receiveBet(p1.getId(), card3.getId(), 1, false); //Turn 3
+			
+			returnCode = gm.receiveBet(p2.getId(), card3.getId(), 1, false);
+		} else {
+			gm.receiveBet(p1.getId(), card2.getId(), 1, false); //Turn 2
+			gm.receiveBet(p2.getId(), card2.getId(), 1, false);
+			gm.receiveBet(p2.getId(), card3.getId(), 1, false); //Turn 3
+			
+			returnCode = gm.receiveBet(p1.getId(), card3.getId(), 1, false);
+		}
+		assertEquals(GameMaster.BATTLE_TIE, returnCode);
+		assertEquals(GameMaster.GAME_TIE, gm.finishGame());
+	}
+	
+	@Test
+	void finishGameTestNotFinished() {
+		nominalGameBeginning();
+		nominalFirstBet();
+		nominalSecondBet();
+		
+		assertEquals(-1, gm.finishGame());
+	}
+	
+	@Test
+	void receiveBetTestSecondTurnAlreadyPlayedCard() {
+		nominalGameBeginning();
 		nominalFirstBet();
 		nominalSecondBet();
 		int returnCode;
@@ -265,13 +358,6 @@ class GameMasterTest implements PropertyChangeListener {
 			returnCode = gm.receiveBet(p1.getId(), card1.getId(), 1, false);
 		}
 		assertEquals(GameMaster.NOT_A_CORRECT_BET_ERROR, returnCode);
-	}
-	
-
-
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-
 	}
 
 }
