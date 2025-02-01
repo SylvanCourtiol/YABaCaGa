@@ -24,8 +24,8 @@ import yabacaga.model.GameMaster;
 import yabacaga.model.Player;
 
 /**
- * Le client, possède l'agent pour communiquer avec le serveur, ainsi que les contrôleurs des différentes IHM.
- * Le client est un singleton
+ * Le client, possède l'agent pour communiquer avec le serveur, ainsi que les
+ * contrôleurs des différentes IHM. Le client est un singleton
  * 
  * @author Mattéo Camin
  * @author Sylvan Courtiol
@@ -217,7 +217,7 @@ public class Client implements AgentEventListener, WebSocketEventListener {
 				this.player.setId(newId);
 				openDialog("Your request to play has been accepted ! Waiting for other player...");
 			} else {
-				String cause = newId == GameMaster.TOO_EXPENSIVE_ERROR ? "Deck too expensive"
+				String cause = newId == GameMaster.INCORRECT_DECK_ERROR ? "Deck too expensive"
 						: newId == GameMaster.ALREADY_ENTERED_ERROR ? "You entered the game already"
 								: newId == GameMaster.TOO_MANY_PLAYER_ERROR ? "Too many players already in"
 										: "Unknown cause";
@@ -331,15 +331,9 @@ public class Client implements AgentEventListener, WebSocketEventListener {
 							: result == opponent.getId() ? "Your opponent won this duel !" : "Unknown duel result";
 			openDialog(message);
 			Platform.runLater(() -> {
-				this.arena.nextState(player, opponent);
-
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				if (this.arena != null) {
+					this.arena.nextState(player, opponent);
 				}
-				returnToEditor();
 			});
 		}
 	}
@@ -356,8 +350,8 @@ public class Client implements AgentEventListener, WebSocketEventListener {
 					: winnerId == player.getId() ? "You won the game !"
 							: winnerId == opponent.getId() ? "Your opponent won this game !" : "Unknown game result";
 			openDialog(message);
-			this.arena.lockSend();
 			returnToEditor();
+
 		}
 	}
 
@@ -424,7 +418,7 @@ public class Client implements AgentEventListener, WebSocketEventListener {
 	/**
 	 * Permet de reçevoir l'instance de client (ou la créer si elle n'existe pas).
 	 * 
-	 * @param args argument à fournir au client
+	 * @param args         argument à fournir au client
 	 * @param primaryStage interface JavaFX
 	 * @return Client : le client
 	 */

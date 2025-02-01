@@ -15,5 +15,6 @@
 	<classpathentry kind="lib" path="libs/okio-2.8.0.jar"/>
 	<classpathentry kind="lib" path="libs/slf4j-api-1.7.30.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

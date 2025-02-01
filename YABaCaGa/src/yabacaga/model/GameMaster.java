@@ -26,7 +26,7 @@ public class GameMaster {
 	public static final int MAX_DECK_COST = 20;
 	public static final int DECK_SIZE = 3;
 
-	public static final int TOO_EXPENSIVE_ERROR = -20;
+	public static final int INCORRECT_DECK_ERROR = -20;
 	public static final int TOO_MANY_PLAYER_ERROR = -21;
 	public static final int ALREADY_ENTERED_ERROR = -22;
 
@@ -88,7 +88,7 @@ public class GameMaster {
 		int returnCode = TOO_MANY_PLAYER_ERROR; // -20 : deck too expensive, -2 : player already entered (network dupe),
 												// -1 :
 		// too many players/game started
-		if (this.state == State.WAITING_PLAYERS || this.players.size() < 2) {
+		if (this.state == State.WAITING_PLAYERS && this.players.size() < 2) {
 			if (!this.players.containsValue(player)) {
 				if (isDeckOk(player)) {
 					Random random = new Random();
@@ -101,7 +101,7 @@ public class GameMaster {
 					support.firePropertyChange("player", null, player);
 					returnCode = newId;
 				} else {
-					returnCode = TOO_EXPENSIVE_ERROR;
+					returnCode = INCORRECT_DECK_ERROR;
 				}
 			} else {
 				returnCode = ALREADY_ENTERED_ERROR;
