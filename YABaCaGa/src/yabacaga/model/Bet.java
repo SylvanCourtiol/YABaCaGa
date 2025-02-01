@@ -38,8 +38,12 @@ public class Bet {
 		return runes;
 	}
 
-	public void setRunes(int runes) {
+	public void setRunes(int runes) throws IllegalArgumentException {
+		if (runes < 0) {
+			throw new IllegalArgumentException();
+		}
 		this.runes = runes;
+		
 	}
 
 	public boolean isRage() {

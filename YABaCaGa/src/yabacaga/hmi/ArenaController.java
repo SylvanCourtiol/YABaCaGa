@@ -187,9 +187,6 @@ public class ArenaController {
     @FXML
     void decrementBet(ActionEvent event) {
     	try {
-    		if (bet.getRunes() - 1 < 0) {
-    			return;
-    		}
     		bet.setRunes(bet.getRunes() - 1);
     		betValueLabel.setText(Integer.toString(bet.getRunes()));
     		update();

@@ -152,7 +152,7 @@ public class GameMaster {
 				Bet bet = new Bet(playerId, cardId, runes, rage);
 				Player p = this.players.get(playerId);
 				if (bet.getCost() <= this.players.get(playerId).getRunes()
-						|| !this.playedCard.contains(p.getDeck().get(cardId))) {
+						&& !this.playedCard.contains(p.getDeck().get(cardId))) {
 					returnCode = 0;
 					p.setRunes(p.getRunes() - bet.getCost());
 					p.play(p.getDeck().get(cardId));

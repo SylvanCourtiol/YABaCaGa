@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 
 import yabacaga.model.Card;
 import yabacaga.model.GameMaster;
-import yabacaga.model.GameMaster.State;
 import yabacaga.model.Player;
 
 class GameMasterTest implements PropertyChangeListener {
@@ -157,6 +156,9 @@ class GameMasterTest implements PropertyChangeListener {
 		int firstPlayer = nominalGameBeginning();
 		int returnCode;
 		
+		assertEquals(GameMaster.DEFAULT_RUNES, p1.getRunes());
+		assertEquals(GameMaster.DEFAULT_RUNES, p1.getRunes());
+		
 		if (firstPlayer == p1.getId()) {
 			returnCode = gm.receiveBet(p1.getId(), card1.getId(), GameMaster.DEFAULT_RUNES + 1, false);
 		} else {
@@ -206,7 +208,6 @@ class GameMasterTest implements PropertyChangeListener {
 	
 	@Test
 	void receiveBetTestSecondPlayerNominalTie() {
-		nominalFirstBet();
 		int returnCode = nominalSecondBet();
 		assertEquals(GameMaster.BATTLE_TIE, returnCode);
 	}
@@ -254,14 +255,14 @@ class GameMasterTest implements PropertyChangeListener {
 	}
 	
 	@Test
-	void receiveBetTestSecondTurnAlreadyPlayed() {
+	void receiveBetTestSecondTurnFirstBetAlreadyPlayedCard() {
 		nominalFirstBet();
 		nominalSecondBet();
 		int returnCode;
 		if (firstPlayer == p1.getId()) {
-			returnCode = gm.receiveBet(p1.getId(), card1.getId(), 1, false);
-		} else {
 			returnCode = gm.receiveBet(p2.getId(), card1.getId(), 1, false);
+		} else {
+			returnCode = gm.receiveBet(p1.getId(), card1.getId(), 1, false);
 		}
 		assertEquals(GameMaster.NOT_A_CORRECT_BET_ERROR, returnCode);
 	}
