@@ -41,7 +41,12 @@ public class Skill implements Serializable {
 	/**
 	 * Modifier amount corresponding to 1 point of cost.
 	 */
-	public static final float MODIFIER_COST_UNIT = 0.5f;
+	public static final float MODIFIER_COST_UNIT = 1.0f;
+	
+	/**
+	 * Attack bonus amount corresponding to 1 point of cost.
+	 */
+	public static final float ATTACK_BONUS_COUNT = 10f;
 	
 	/**
 	 * The power modifier for this skill.
@@ -100,11 +105,23 @@ public class Skill implements Serializable {
 		
 		s = new Skill();
 		s.setPowerModifier(1.5f);
-		s.setDamageModifier(1.5f);
+		s.setDamageBonus(1);
 		skills.add(s);
 		
 		s = new Skill();
-		s.setRunePayback(1);
+		s.setRunePayback(2);
+		skills.add(s);
+		
+		s = new Skill();
+		s.setDamageRevenge(2);
+		skills.add(s);
+		
+		s = new Skill();
+		s.setRunePoison(2);
+		skills.add(s);
+		
+		s = new Skill();
+		s.setAttackBonus(10);
 		skills.add(s);
 		
 		s = new Skill(); //Neutral skill
@@ -118,8 +135,8 @@ public class Skill implements Serializable {
 	 * @return the cost of this skill.
 	 */
 	public int getCost() {
-		return powerBonus + attackBonus + damageBonus + runePayback + runePoison 
-				+ costFromModifier(powerModifier) + costFromModifier(attackModifier) + costFromModifier(damageModifier);
+		return powerBonus + (int)Math.abs(attackBonus/ATTACK_BONUS_COUNT) + damageBonus*2 + runePayback + runePoison*2 + damageRevenge*2
+				+ costFromModifier(powerModifier) + costFromModifier(attackModifier)*2 + costFromModifier(damageModifier)*2;
 	}
 	
 	/**

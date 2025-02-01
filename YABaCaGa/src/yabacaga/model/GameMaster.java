@@ -146,8 +146,8 @@ public class GameMaster {
 						support.firePropertyChange("battle", null, turnWinner);
 						this.turn++;
 						int winner = checkBattleState(playerId);
+						returnCode = turnWinner;
 						if (winner == -1) {
-							returnCode = turnWinner;
 							this.firstPlayer = playerId;
 							this.state = State.WAITING_FIRST_BET;
 							this.firstBet = null;

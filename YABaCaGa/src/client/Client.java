@@ -82,6 +82,9 @@ public class Client implements AgentEventListener, WebSocketEventListener {
 
 		agent.serviceInit("receiveGameResult", clientCB);
 		agent.serviceArgAdd("receiveGameResult", "winner", IopType.IGS_DATA_T);
+		
+		agent.serviceInit("opponentLeft", clientCB);
+		agent.serviceArgAdd("opponentLeft", "hasLeft", IopType.IGS_BOOL_T);
 
 		agent.start();
 
@@ -231,6 +234,14 @@ public class Client implements AgentEventListener, WebSocketEventListener {
 			openDialog(message);
 			Platform.runLater(() -> {
 				this.arena.nextState(player, opponent);
+				
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				returnToEditor();
 			});
 		}
 	}
@@ -243,6 +254,38 @@ public class Client implements AgentEventListener, WebSocketEventListener {
 			openDialog(message);
 			this.arena.lockSend();
 		}
+	}
+	
+	public void opponentLeft(boolean opponentLeft) {
+		if (this.player != null && this.opponent != null && opponentLeft) {
+			this.openDialog("Opponent left the game");
+			returnToEditor();
+		}
+		
+	}
+	
+	private void returnToEditor() {
+		player = null;
+		editor = null;
+		arena = null;
+		opponent = null;
+		firstPlayer = false;
+		Platform.runLater(() ->  {
+			try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/yabacaga/hmi/editor.fxml"));
+				//loader.setController(new EditorController());
+				BorderPane root;
+				root = (BorderPane)loader.load();
+				Scene scene = new Scene(root,1100,680);
+				scene.getStylesheets().add(getClass().getResource("/yabacaga/hmi/application.css").toExternalForm());
+				primaryStage.setTitle("YABaCaGa");
+				primaryStage.setScene(scene);
+				primaryStage.show();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 	}
 
 	public void openDialog(String message) {

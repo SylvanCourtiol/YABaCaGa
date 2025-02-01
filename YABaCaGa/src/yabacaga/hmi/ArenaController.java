@@ -236,6 +236,7 @@ public class ArenaController {
     }
     
     void update() {
+    	this.unlockSend();
     	if (player == null || opponent == null) {
     		return;
     	}
@@ -256,11 +257,13 @@ public class ArenaController {
     	
     	updateMiddleText();
     	
-    	if (this.firstPlayer && (this.state == State.WAIT_END_BET_1 || this.state == State.BET_2 || this.state == State.WAIT_END_BET_3) ||
-    			!this.firstPlayer && (this.state == State.BET_1 || this.state == State.WAIT_END_BET_2 || this.state == State.BET_3) || this.state == State.INIT) {
+    	
+    	boolean lockCon = (this.firstPlayer && (this.state == State.WAIT_END_BET_1 || this.state == State.BET_2 || this.state == State.WAIT_END_BET_3)) || 
+    			(!this.firstPlayer && (this.state == State.BET_1 || this.state == State.WAIT_END_BET_2 || this.state == State.BET_3)) || this.state == State.INIT;
+    	if (lockCon) {
     		this.lockSend();
     	} else {
-    		this.unlockSend();
+    		
     	}
     	
     	lastState = state;
@@ -325,7 +328,8 @@ public class ArenaController {
     	// update rage
     	rageCheckbox.setText(String.format("Rage (cost: %d runes)", Bet.RAGE_COST));
     	
-    	boolean isBettingOk = (state == State.BET_1 || state == State.BET_2 || state == State.BET_3);
+    	boolean isBettingOk = (this.firstPlayer && (this.state == State.BET_1 || this.state == State.WAIT_END_BET_2 || this.state == State.BET_3)) || 
+		(!this.firstPlayer && (this.state == State.WAIT_END_BET_1 || this.state == State.BET_2 || this.state == State.WAIT_END_BET_3));
     	cardComboBox.setDisable(!isBettingOk);
     	incrementBetButton.setDisable(!isBettingOk);
     	decrementBetButton.setDisable(!isBettingOk);
@@ -397,17 +401,13 @@ public class ArenaController {
     
     public void acceptBet() {
     	if (this.state == State.BET_1 || this.state == State.BET_2 || this.state == State.BET_3) {
-    		System.out.println(this.state);
     		state = State.values()[(state.ordinal()+1)%State.values().length];
-    		System.out.println(this.state);
         	update();
     	}
     }
     
     public void nextState(Player player, Player opponent) {
-    	System.out.println(this.state);
     	state = State.values()[(state.ordinal()+1)%State.values().length];
-    	System.out.println(this.state);
     	if (player.getHealthPoints() <= 0 || opponent.getHealthPoints() <= 0) {
     		state = State.END;
     	}
