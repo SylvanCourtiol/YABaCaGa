@@ -541,6 +541,15 @@
                                 }
                             ],
                             "name": "receiveOpponentBet"
+                        },
+                        {
+                            "arguments": [
+                                {
+                                    "name": "hasLeft",
+                                    "type": "BOOL"
+                                }
+                            ],
+                            "name": "opponentLeft"
                         }
                     ]
                 },
@@ -550,35 +559,231 @@
                 "plugin": "ingescape_class",
                 "uuid": "b06facba-315d-4be8-9860-1064c2867b00",
                 "version": ""
+            }
+        ],
+        "requirements": [
+            {
+                "description": "",
+                "importUUID": "",
+                "isPackage": true,
+                "name": "Client",
+                "package": "",
+                "plugin": "ingescape_requirement",
+                "uuid": "60f4b066-fb1b-4323-a4f6-a244afff1941"
             },
             {
-                "className": "AI",
-                "color": 0,
-                "definition": {
-                    "inputs": [
-                        {
-                            "name": "prompt",
-                            "type": "STRING"
-                        }
-                    ],
-                    "outputs": [
-                        {
-                            "name": "image",
-                            "type": "DATA"
-                        }
-                    ]
-                },
                 "description": "",
-                "icon": -1,
+                "importUUID": "",
+                "isPackage": true,
+                "name": "Editor",
+                "package": "Client",
+                "plugin": "ingescape_requirement",
+                "uuid": "02cda2cf-4b8c-4e69-8e10-4587a1438814"
+            },
+            {
+                "description": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\nhr { height: 1px; border-width: 0; }\nli.unchecked::marker { content: \"\\2610\"; }\nli.checked::marker { content: \"\\2612\"; }\n</style></head><body style=\" font-family:'Asap'; font-size:13px; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Permettre au joueur de construire son deck (3 cartes) au lancement du jeu.</p></body></html>",
+                "importUUID": "",
+                "name": "Edition du deck",
+                "package": "Client::Editor",
+                "plugin": "ingescape_requirement",
+                "uuid": "e0e54074-0e53-4a3a-9b7c-4aec21638fe7"
+            },
+            {
+                "derivedFrom": [
+                    "e0e54074-0e53-4a3a-9b7c-4aec21638fe7"
+                ],
+                "description": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\nhr { height: 1px; border-width: 0; }\nli.unchecked::marker { content: \"\\2610\"; }\nli.checked::marker { content: \"\\2612\"; }\n</style></head><body style=\" font-family:'Asap'; font-size:13px; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Personnalisation du nom du joueur.</p></body></html>",
+                "importUUID": "",
+                "name": "Nom du joueur",
+                "package": "Client::Editor",
+                "plugin": "ingescape_requirement",
+                "uuid": "c00cca11-3a6e-417d-aa2e-79f34216c51e"
+            },
+            {
+                "derivedFrom": [
+                    "e0e54074-0e53-4a3a-9b7c-4aec21638fe7"
+                ],
+                "description": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\nhr { height: 1px; border-width: 0; }\nli.unchecked::marker { content: \"\\2610\"; }\nli.checked::marker { content: \"\\2612\"; }\n</style></head><body style=\" font-family:'Asap'; font-size:13px; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Edition de chaque carte individuellement.</p></body></html>",
+                "importUUID": "",
+                "name": "Edition d'une carte",
+                "package": "Client::Editor",
+                "plugin": "ingescape_requirement",
+                "uuid": "4b540a7b-cbfe-4031-a249-411c84ac2eaf"
+            },
+            {
+                "derivedFrom": [
+                    "4b540a7b-cbfe-4031-a249-411c84ac2eaf"
+                ],
+                "description": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\nhr { height: 1px; border-width: 0; }\nli.unchecked::marker { content: \"\\2610\"; }\nli.checked::marker { content: \"\\2612\"; }\n</style></head><body style=\" font-family:'Asap'; font-size:13px; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Personnalisation du nom de la carte.</p></body></html>",
+                "importUUID": "",
+                "name": "Nom de la carte",
+                "package": "Client::Editor",
+                "plugin": "ingescape_requirement",
+                "uuid": "100172c0-9e05-421e-b448-322ac8601fca"
+            },
+            {
+                "derivedFrom": [
+                    "4b540a7b-cbfe-4031-a249-411c84ac2eaf"
+                ],
+                "description": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\nhr { height: 1px; border-width: 0; }\nli.unchecked::marker { content: \"\\2610\"; }\nli.checked::marker { content: \"\\2612\"; }\n</style></head><body style=\" font-family:'Asap'; font-size:13px; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Modification de la valeur en power de la carte.</p></body></html>",
+                "importUUID": "",
+                "name": "Power de la carte",
+                "package": "Client::Editor",
+                "plugin": "ingescape_requirement",
+                "uuid": "6596be37-7bcc-4102-8538-96cc5df2085f"
+            },
+            {
+                "derivedFrom": [
+                    "4b540a7b-cbfe-4031-a249-411c84ac2eaf"
+                ],
+                "description": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\nhr { height: 1px; border-width: 0; }\nli.unchecked::marker { content: \"\\2610\"; }\nli.checked::marker { content: \"\\2612\"; }\n</style></head><body style=\" font-family:'Asap'; font-size:13px; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Modification de la valeur en damage de la carte.</p></body></html>",
+                "importUUID": "",
+                "name": "Damage de la carte",
+                "package": "Client::Editor",
+                "plugin": "ingescape_requirement",
+                "uuid": "6cf599fd-4c9c-40c6-bbdc-56e64fbb7d4d"
+            },
+            {
+                "derivedFrom": [
+                    "4b540a7b-cbfe-4031-a249-411c84ac2eaf"
+                ],
+                "description": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\nhr { height: 1px; border-width: 0; }\nli.unchecked::marker { content: \"\\2610\"; }\nli.checked::marker { content: \"\\2612\"; }\n</style></head><body style=\" font-family:'Asap'; font-size:13px; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Choix d'un skill pour cette carte.</p></body></html>",
+                "importUUID": "",
+                "name": "Skill de la carte",
+                "package": "Client::Editor",
+                "plugin": "ingescape_requirement",
+                "uuid": "e35c4c74-a17d-4621-b3b1-986476fa8bbe"
+            },
+            {
+                "derivedFrom": [
+                    "e0e54074-0e53-4a3a-9b7c-4aec21638fe7"
+                ],
+                "description": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\nhr { height: 1px; border-width: 0; }\nli.unchecked::marker { content: \"\\2610\"; }\nli.checked::marker { content: \"\\2612\"; }\n</style></head><body style=\" font-family:'Asap'; font-size:13px; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Le deck a un coût selon les modifications effectuées aux cartes. Il ne doit pas dépasser une certaine valeur.</p></body></html>",
+                "importUUID": "",
+                "name": "Coût du deck",
+                "package": "Client::Editor",
+                "plugin": "ingescape_requirement",
+                "uuid": "eb73c092-c886-4950-aef1-e72aac19938d"
+            },
+            {
+                "description": "",
+                "importUUID": "",
+                "isPackage": true,
+                "name": "Arena",
+                "package": "Client",
+                "plugin": "ingescape_requirement",
+                "uuid": "a9f34fe5-812a-4629-bb58-bddf08d0fe48"
+            },
+            {
+                "description": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\nhr { height: 1px; border-width: 0; }\nli.unchecked::marker { content: \"\\2610\"; }\nli.checked::marker { content: \"\\2612\"; }\n</style></head><body style=\" font-family:'Asap'; font-size:13px; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Le joueur peut choisir la carte qu'il veut jouer à chaque manche. Il peut également parier des runes qui augmente l'attack. Il peut aussi choisir d'activer la rage moyennant des runes qui augmente les damage en cas de victoire.</p></body></html>",
+                "importUUID": "",
+                "name": "Pari",
+                "package": "Client::Arena",
+                "plugin": "ingescape_requirement",
+                "uuid": "fde26cbf-92bb-42df-8063-b1b144fb80ab"
+            },
+            {
+                "derivedFrom": [
+                    "fde26cbf-92bb-42df-8063-b1b144fb80ab"
+                ],
+                "description": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\nhr { height: 1px; border-width: 0; }\nli.unchecked::marker { content: \"\\2610\"; }\nli.checked::marker { content: \"\\2612\"; }\n</style></head><body style=\" font-family:'Asap'; font-size:13px; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Choix de la carte à jouer cette manche parmi les cartes non jouées pour le moment.</p></body></html>",
+                "importUUID": "",
+                "name": "Sélection de la carte à jouer",
+                "package": "Client::Arena",
+                "plugin": "ingescape_requirement",
+                "uuid": "7f4eb318-7909-4323-a969-9ead4e6b471f"
+            },
+            {
+                "derivedFrom": [
+                    "fde26cbf-92bb-42df-8063-b1b144fb80ab"
+                ],
+                "description": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\nhr { height: 1px; border-width: 0; }\nli.unchecked::marker { content: \"\\2610\"; }\nli.checked::marker { content: \"\\2612\"; }\n</style></head><body style=\" font-family:'Asap'; font-size:13px; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Pari d'un nombre de runes qui augentera l'attack de la carte jouée.</p></body></html>",
+                "importUUID": "",
+                "name": "Pari en runes",
+                "package": "Client::Arena",
+                "plugin": "ingescape_requirement",
+                "uuid": "a9f25727-2856-4662-b0e7-1129eb74750b"
+            },
+            {
+                "derivedFrom": [
+                    "fde26cbf-92bb-42df-8063-b1b144fb80ab"
+                ],
+                "description": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\nhr { height: 1px; border-width: 0; }\nli.unchecked::marker { content: \"\\2610\"; }\nli.checked::marker { content: \"\\2612\"; }\n</style></head><body style=\" font-family:'Asap'; font-size:13px; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Activation de la rage avec un coût en rune qui augmente d'une valeur constante les damages en cas de victoire de la manche.</p></body></html>",
+                "importUUID": "",
+                "name": "Activation de la rage",
+                "package": "Client::Arena",
+                "plugin": "ingescape_requirement",
+                "uuid": "06b15f3d-63f2-49d7-88a3-97c85fb01dec"
+            },
+            {
+                "description": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\nhr { height: 1px; border-width: 0; }\nli.unchecked::marker { content: \"\\2610\"; }\nli.checked::marker { content: \"\\2612\"; }\n</style></head><body style=\" font-family:'Asap'; font-size:13px; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Affichage d'une indication qu'un carte a déjà été jouée pour le joueur et l'adversaire.</p></body></html>",
+                "importUUID": "",
+                "name": "Affichage des cartes jouées",
+                "package": "Client::Arena",
+                "plugin": "ingescape_requirement",
+                "uuid": "4d8b0f9c-397f-45c0-925a-9bdb926bd092"
+            },
+            {
+                "description": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\nhr { height: 1px; border-width: 0; }\nli.unchecked::marker { content: \"\\2610\"; }\nli.checked::marker { content: \"\\2612\"; }\n</style></head><body style=\" font-family:'Asap'; font-size:13px; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Affichage du tour actuel et de quel joueur est en train de jouer. Affichage des résultats des manches et du jeu à la fin.</p></body></html>",
+                "importUUID": "",
+                "name": "Affichage de l'état du jeu",
+                "package": "Client::Arena",
+                "plugin": "ingescape_requirement",
+                "uuid": "920d429d-71aa-476e-95e9-79aa17769b1a"
+            },
+            {
+                "description": "",
+                "importUUID": "",
+                "isPackage": true,
+                "name": "Server",
                 "package": "",
-                "plugin": "ingescape_class",
-                "uuid": "7700e712-ab00-4cd3-ab5c-d5e7bfe3718c",
-                "version": ""
+                "plugin": "ingescape_requirement",
+                "uuid": "cf298de7-ec72-417f-b6ab-9b71b56e1cd3"
+            },
+            {
+                "description": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\nhr { height: 1px; border-width: 0; }\nli.unchecked::marker { content: \"\\2610\"; }\nli.checked::marker { content: \"\\2612\"; }\n</style></head><body style=\" font-family:'Asap'; font-size:13px; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Affichage du déroulement du jeu dans le chat du Whiteboard. Offre un point de vue omniscient sur l'état du jeu.</p></body></html>",
+                "importUUID": "",
+                "name": "Whiteboard logging",
+                "package": "Server",
+                "plugin": "ingescape_requirement",
+                "uuid": "27884445-5f61-44e7-9ab3-99fb64dd8c48"
+            },
+            {
+                "description": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\nhr { height: 1px; border-width: 0; }\nli.unchecked::marker { content: \"\\2610\"; }\nli.checked::marker { content: \"\\2612\"; }\n</style></head><body style=\" font-family:'Asap'; font-size:13px; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Recevoir les decks que les joueurs souhaitent utiliser. Transmettre l'information des deux decks à tous les joueurs.</p></body></html>",
+                "importUUID": "",
+                "name": "Recevoir les decks construits par les joueurs",
+                "package": "Server",
+                "plugin": "ingescape_requirement",
+                "uuid": "e9826eab-1170-4c36-9f3e-fe7519b56547"
+            },
+            {
+                "description": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\nhr { height: 1px; border-width: 0; }\nli.unchecked::marker { content: \"\\2610\"; }\nli.checked::marker { content: \"\\2612\"; }\n</style></head><body style=\" font-family:'Asap'; font-size:13px; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Recevoir le pari du joueur dont c'est le tour. L'enregistrer afin de pouvoir dérouler la manche une fois les deux paris reçus.</p></body></html>",
+                "importUUID": "",
+                "name": "Recevoir les paris des joueurs",
+                "package": "Server",
+                "plugin": "ingescape_requirement",
+                "uuid": "3d49afe4-96b7-4331-8835-095dab88a4b2"
+            },
+            {
+                "description": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\nhr { height: 1px; border-width: 0; }\nli.unchecked::marker { content: \"\\2610\"; }\nli.checked::marker { content: \"\\2612\"; }\n</style></head><body style=\" font-family:'Asap'; font-size:13px; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">A partir des actions des joueurs, calculer l'état du jeu.</p></body></html>",
+                "importUUID": "",
+                "name": "Déroulement du jeu",
+                "package": "Server",
+                "plugin": "ingescape_requirement",
+                "uuid": "a4b00f6c-6b8f-4ec3-ac2b-2e1c7e3abe44"
+            },
+            {
+                "description": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\nhr { height: 1px; border-width: 0; }\nli.unchecked::marker { content: \"\\2610\"; }\nli.checked::marker { content: \"\\2612\"; }\n</style></head><body style=\" font-family:'Asap'; font-size:13px; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Transmettre l'état du jeu restreint à la visibilité du joueur à chaque joueur.</p></body></html>",
+                "importUUID": "",
+                "name": "Transmettre les informations aux joueurs",
+                "package": "Server",
+                "plugin": "ingescape_requirement",
+                "uuid": "7c2ea7b7-c9e8-4eec-a87f-9652e414f6c6"
             }
         ],
         "scripts": [
             {
-                "code": "//\n// Test\n//\n// created on 2025-01-10\n//\n\n// The script language documentation is available at\n// https://ingescape.com/verification-validation-using-ingescape/\n\n\"My sample block\" {\n    // -> \"manual entry in the execution report\"\n\n    // Input allocation\n    // MyAgent.my_input = 12\n\n    // Output verification\n    // assert MyAgent.my_output >= 5.43\n\n    // Service call\n    // MyAgent.my_service (\"arg1\", 12.34)\n\n    // Reply verification\n    // assert my_reply from CallerAgent with arg2 = 34.56 and arg3 = \"this value\"\n}\n\n",
+                "code": "//\n// Test\n//\n// created on 2025-01-10\n//\n\n// The script language documentation is available at\n// https://ingescape.com/verification-validation-using-ingescape/\n\nsleep 3000\n\"My sample block\" {\n    // -> \"manual entry in the execution report\" \n\n    // Input allocation\n    // MyAgent.my_input = 12\n\n    // Output verification\n    // assert MyAgent.my_output >= 5.43\n\n    // Service call\n    // MyAgent.my_service (\"arg1\", 12.34)\n    // -> \"call receiveBet\"\n    //YABaCaGaServer.receiveBet(1, 0, 2, true)\n    //  -> \"assert acceptBet\"\n    // assert acceptBet from Player_Michel\n    //  assert acceptBet from Player_Pierre\n    assert enterPlayer from YABaCaGaServer\n\n    // Reply verification\n    // assert my_reply from CallerAgent with arg2 = 34.56 and arg3 = \"this value\"\n}\n\n",
                 "name": "Test",
                 "package": "",
                 "uuid": "869d5cea-f93d-4360-8e9f-8bc9c059960e"
@@ -616,21 +821,6 @@
         {
             "children": [
                 {
-                    "data": {
-                        "data_decoder": "BINARY",
-                        "msg_type": "",
-                        "proto_file_path": "",
-                        "string_decoder": "PLAIN_TEXT"
-                    },
-                    "height": 112,
-                    "name": "",
-                    "tool": "com.ingescape.circle.tool.observer",
-                    "uuid": "767d0232-ba57-46d2-bdec-fdc3d0f8b64e",
-                    "width": 270,
-                    "x": 1049.2005587529088,
-                    "y": 56.70327083852965
-                },
-                {
                     "agent": {
                         "instances": [
                             {
@@ -642,14 +832,14 @@
                             },
                             {
                                 "commandLine": "C:\\Users\\sylva\\Documents\\WS\\IHM\\Whiteboard\\Whiteboard.exe",
-                                "hostname": "DESKTOP-HE6BILN",
+                                "hostname": "LAPTOP-JB0J06CC",
                                 "ip": "127.0.0.1",
                                 "isAttachedToCircle": false,
                                 "uuid": "9b1f763d-4843-44b9-91f4-5c696f6d0a87"
                             },
                             {
                                 "commandLine": "C:\\Users\\33787\\Downloads\\Whiteboard\\Whiteboard\\Whiteboard.exe",
-                                "hostname": "DESKTOP-HE6BILN",
+                                "hostname": "LAPTOP-JB0J06CC",
                                 "ip": "127.0.0.1",
                                 "isAttachedToCircle": false,
                                 "uuid": "1ff2beaa-ea0d-404f-9ff1-d5ab74fcca7f"
@@ -671,21 +861,94 @@
                     "uuid": "88a1d5c4-70a1-43d5-9073-97a385e1c40b",
                     "width": 292.865189347972,
                     "x": 770.0433321379389,
-                    "y": 265.5352947269417
+                    "y": 327.2820277013108
+                },
+                {
+                    "data": {
+                        "data_decoder": "BINARY",
+                        "msg_type": "",
+                        "proto_file_path": "",
+                        "string_decoder": "PLAIN_TEXT"
+                    },
+                    "height": 112,
+                    "name": "",
+                    "tool": "com.ingescape.circle.tool.observer",
+                    "uuid": "767d0232-ba57-46d2-bdec-fdc3d0f8b64e",
+                    "width": 270,
+                    "x": 1114.3152953440617,
+                    "y": 327.26622805349274
+                },
+                {
+                    "agent": {
+                        "instances": [
+                            {
+                                "commandLine": "\"C:\\Program Files\\Ingescape\\Ingescape Circle v4\\igsProxy.exe\" --port 5473 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/33787/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
+                                "hostname": "LAPTOP-JB0J06CC",
+                                "ip": "127.0.0.1",
+                                "isAttachedToCircle": false,
+                                "uuid": "e335e607-1bf0-4fdd-a0e6-5e8bb7458e3f"
+                            },
+                            {
+                                "commandLine": "\"C:\\Program Files\\Ingescape\\Ingescape Circle v4\\igsProxy.exe\" --port 40500 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/sylva/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
+                                "hostname": "LAPTOP-JB0J06CC",
+                                "ip": "127.0.0.1",
+                                "isAttachedToCircle": false,
+                                "uuid": "d6ade1c6-8e4f-4791-a894-88e0a9f57f7a"
+                            }
+                        ]
+                    },
+                    "class": "b06facba-315d-4be8-9860-1064c2867b00",
+                    "comment": "",
+                    "height": 100,
+                    "name": "Player_Michel",
+                    "simulationTime": 5000,
+                    "uuid": "b4c438f0-c548-406e-8558-b9cc1d2ba31c",
+                    "width": 250,
+                    "x": 107.96666545770768,
+                    "y": 350.77813777730813
+                },
+                {
+                    "agent": {
+                        "instances": [
+                            {
+                                "commandLine": "\"C:\\Program Files\\Ingescape\\Ingescape Circle v4\\igsProxy.exe\" --port 5473 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/33787/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
+                                "hostname": "LAPTOP-JB0J06CC",
+                                "ip": "127.0.0.1",
+                                "isAttachedToCircle": false,
+                                "uuid": "8929056f-3baa-41da-9f02-b4843669802e"
+                            },
+                            {
+                                "commandLine": "\"C:\\Program Files\\Ingescape\\Ingescape Circle v4\\igsProxy.exe\" --port 40500 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/sylva/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
+                                "hostname": "LAPTOP-JB0J06CC",
+                                "ip": "127.0.0.1",
+                                "isAttachedToCircle": false,
+                                "uuid": "27307566-b8c8-4382-8840-6a30118c6eab"
+                            }
+                        ]
+                    },
+                    "class": "b06facba-315d-4be8-9860-1064c2867b00",
+                    "comment": "",
+                    "height": 100,
+                    "name": "Player_Pierre",
+                    "simulationTime": 5000,
+                    "uuid": "3a264916-3cba-4ff4-ad50-a2fd4263633b",
+                    "width": 250,
+                    "x": 108.63817907666362,
+                    "y": 501.8551579219268
                 },
                 {
                     "agent": {
                         "instances": [
                             {
                                 "commandLine": "\"C:\\Program Files\\Ingescape\\Ingescape Circle v4\\igsProxy.exe\" --port 40500 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/sylva/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
-                                "hostname": "DESKTOP-HE6BILN",
+                                "hostname": "LAPTOP-JB0J06CC",
                                 "ip": "127.0.0.1",
                                 "isAttachedToCircle": false,
                                 "uuid": "0226e2ea-5a91-4f31-9965-c47b137ca30e"
                             },
                             {
                                 "commandLine": "\"C:\\Program Files\\Ingescape\\Ingescape Circle v4\\igsProxy.exe\" --port 5473 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/33787/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
-                                "hostname": "DESKTOP-HE6BILN",
+                                "hostname": "LAPTOP-JB0J06CC",
                                 "ip": "127.0.0.1",
                                 "isAttachedToCircle": false,
                                 "uuid": "365011cd-45af-4302-b788-ceeb5a06548b"
@@ -706,28 +969,35 @@
                     "agent": {
                         "instances": [
                             {
-                                "commandLine": "\"C:/Program Files/Ingescape/Ingescape Circle v4/igsProxy.exe\" --port 5473 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/33787/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
-                                "hostname": "DESKTOP-HE6BILN",
+                                "commandLine": "\"C:/Program Files/Ingescape/Ingescape Circle v4/igsProxy.exe\" --port 40500 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/33787/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
+                                "hostname": "LAPTOP-JB0J06CC",
                                 "ip": "127.0.0.1",
                                 "isAttachedToCircle": false,
                                 "uuid": "26ed8c5b-4900-4183-9b40-e91f5c47c600"
                             },
                             {
-                                "commandLine": "\"C:/Program Files/Ingescape/Ingescape Circle v4/igsProxy.exe\" --port 5473 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/33787/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
-                                "hostname": "DESKTOP-HE6BILN",
+                                "commandLine": "\"C:/Program Files/Ingescape/Ingescape Circle v4/igsProxy.exe\" --port 40500 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/33787/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
+                                "hostname": "LAPTOP-JB0J06CC",
                                 "ip": "127.0.0.1",
                                 "isAttachedToCircle": false,
                                 "uuid": "7d920f9e-f0bd-437a-8f5a-8a0b1ba2acc7"
                             },
                             {
-                                "commandLine": "\"C:\\Program Files\\Ingescape\\Ingescape Circle v4\\igsProxy.exe\" --port 5473 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/33787/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
-                                "hostname": "DESKTOP-HE6BILN",
+                                "commandLine": "\"C:/Program Files/Ingescape/Ingescape Circle v4/igsProxy.exe\" --port 40500 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/33787/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
+                                "hostname": "LAPTOP-JB0J06CC",
                                 "ip": "127.0.0.1",
                                 "isAttachedToCircle": false,
                                 "uuid": "186b39c7-6c3a-4534-92a8-1411bf7a5076"
                             },
                             {
-                                "commandLine": "\"C:/Program Files/Ingescape/Ingescape Circle v4/igsProxy.exe\" --port 5473 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/33787/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
+                                "commandLine": "\"C:\\Program Files\\Ingescape\\Ingescape Circle v4\\igsProxy.exe\" --port 40500 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/sylva/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
+                                "hostname": "LAPTOP-JB0J06CC",
+                                "ip": "127.0.0.1",
+                                "isAttachedToCircle": false,
+                                "uuid": "c50c8d58-57d1-41d0-bf6e-20c7c2b7e185"
+                            },
+                            {
+                                "commandLine": "\"C:/Program Files/Ingescape/Ingescape Circle v4/igsProxy.exe\" --port 40500 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/sylva/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
                                 "isAttachedToCircle": true,
                                 "uuid": "e6e6b7ad-e20c-44e0-8c4f-dfecd8873eb0"
                             }
@@ -741,52 +1011,8 @@
                     "simulationTime": 5000,
                     "uuid": "d027553e-bb4f-4054-a287-a637d392c349",
                     "width": 250,
-                    "x": -75.9132401902649,
-                    "y": 629.5852385722709
-                },
-                {
-                    "agent": {
-                        "instances": [
-                            {
-                                "commandLine": "\"C:\\Program Files\\Ingescape\\Ingescape Circle v4\\igsProxy.exe\" --port 5473 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/33787/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
-                                "hostname": "DESKTOP-HE6BILN",
-                                "ip": "127.0.0.1",
-                                "isAttachedToCircle": false,
-                                "uuid": "e335e607-1bf0-4fdd-a0e6-5e8bb7458e3f"
-                            }
-                        ]
-                    },
-                    "class": "b06facba-315d-4be8-9860-1064c2867b00",
-                    "comment": "",
-                    "height": 100,
-                    "name": "Player_Michel",
-                    "simulationTime": 5000,
-                    "uuid": "b4c438f0-c548-406e-8558-b9cc1d2ba31c",
-                    "width": 250,
-                    "x": -240.060374943282,
-                    "y": 243.00202204022753
-                },
-                {
-                    "agent": {
-                        "instances": [
-                            {
-                                "commandLine": "\"C:\\Program Files\\Ingescape\\Ingescape Circle v4\\igsProxy.exe\" --port 5473 --name Proxy --device \"Loopback Pseudo-Interface 1\" --license C:/Users/33787/Documents/Ingescape/licenses --ws ws://127.0.0.1:8080",
-                                "hostname": "DESKTOP-HE6BILN",
-                                "ip": "127.0.0.1",
-                                "isAttachedToCircle": false,
-                                "uuid": "8929056f-3baa-41da-9f02-b4843669802e"
-                            }
-                        ]
-                    },
-                    "class": "b06facba-315d-4be8-9860-1064c2867b00",
-                    "comment": "",
-                    "height": 100,
-                    "name": "Player_Pierre",
-                    "simulationTime": 5000,
-                    "uuid": "3a264916-3cba-4ff4-ad50-a2fd4263633b",
-                    "width": 250,
-                    "x": 370.2197933135368,
-                    "y": 460.31644664826
+                    "x": 257.5191178713286,
+                    "y": 656.5292675065411
                 }
             ],
             "links": {
