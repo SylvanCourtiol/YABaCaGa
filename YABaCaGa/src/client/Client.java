@@ -350,7 +350,6 @@ public class Client implements AgentEventListener, WebSocketEventListener {
 					: winnerId == player.getId() ? "You won the game !"
 							: winnerId == opponent.getId() ? "Your opponent won this game !" : "Unknown game result";
 			openDialog(message);
-			returnToEditor();
 
 		}
 	}
