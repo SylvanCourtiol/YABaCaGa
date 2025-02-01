@@ -105,6 +105,17 @@ public class Server implements AgentEventListener, WebSocketEventListener, Prope
 	@Override
 	public void handleAgentEvent(Agent agent, AgentEvent event, String uuid, String name, Object eventData) {
 		_logger.debug("**received agent event for {} ({}): {} with data {}", name, uuid, event, eventData);
+		
+		if (playersAgentName.containsValue(name) && event == AgentEvent.IGS_AGENT_EXITED) {
+			for (String s : playersAgentName.values()) {
+				if (!s.equals(name)) {
+					List<Object> args = new ArrayList<Object>();
+					args.add(true);
+					this.agent.serviceCall(s, "opponentLeft", args, "");
+					this.model.finishGame();
+				}
+			}
+		}
 	}
 
 	@Override
@@ -128,7 +139,6 @@ public class Server implements AgentEventListener, WebSocketEventListener, Prope
 	}
 
 	public void receiveBet(Agent agent, String caller, int playerId, int cardId, int runes, boolean rage) {
-		System.out.println(caller + " cardId : " + cardId);
 		if (playersAgentName.containsKey(playerId) && cardId >= 0 && cardId < GameMaster.DECK_SIZE) {
 			int returnCode = model.receiveBet(playerId, cardId, runes, rage);
 			if (returnCode != GameMaster.NOT_A_PLAYER_BET_ERROR && returnCode != GameMaster.NOT_PLAYER_TURN_ERROR
@@ -235,91 +245,6 @@ public class Server implements AgentEventListener, WebSocketEventListener, Prope
 		Thread.sleep(2000);
 		agent.outputSetString("title", "YABaCaGa !");
 		agent.outputSetString("chatMessage", "Server connected.");
-
-		Thread.sleep(2000);
-
-		Skill skill = new Skill();
-		Card card1 = new Card(0, "Beep");
-		Card card2 = new Card(1, "Borp");
-		Card card3 = new Card(2, "Zmorp");
-		card1.setPower(1);
-		card2.setPower(1);
-		card3.setPower(1);
-		card1.setDamage(1);
-		card2.setDamage(1);
-		card3.setDamage(1);
-		card1.setSkill(skill);
-		card2.setSkill(skill);
-		card3.setSkill(skill);
-		List<Card> deck = new ArrayList<Card>();
-		deck.add(card1);
-		deck.add(card2);
-		deck.add(card3);
-
-		Player player = new Player("Pierre", deck);
-		Player player2 = new Player("Michel", new ArrayList<>(deck));
-
-//		model.enterPlayer(player);
-//		Thread.sleep(1000);
-//		model.enterPlayer(player2);
-//		System.out.println("Joueurs ajoutés");
-//		Thread.sleep(1000);
-//
-//		model.beginGame();
-//		Thread.sleep(1000);
-//
-//		System.out.println(player.getId());
-//		System.out.println(player2.getId());
-//
-//		if (model.getFirstPlayer() == player.getId()) { // Scénario quand Pierre premier joueur
-//			// Turn 1
-//			model.receiveBet(player.getId(), 0, 3, false);
-//			Thread.sleep(1000);
-//			model.receiveBet(player2.getId(), 2, 10, true); // Should show player 2 as winner of the battle in
-//															// whiteboard
-//			Thread.sleep(1000);
-//
-//			// Turn 2
-//			assert (model.receiveBet(player.getId(), 2, 8, false) == -2); // Wrong Player, should be ignored
-//			Thread.sleep(1000);
-//			assert (model.receiveBet(player2.getId(), 2, 10, true) == -3); // Card already played, should be ignored
-//			Thread.sleep(1000);
-//			model.receiveBet(player2.getId(), 1, 7, false);
-//			Thread.sleep(1000);
-//			model.receiveBet(player.getId(), 2, 8, false); // Should show player 1 as winner
-//			Thread.sleep(1000);
-//
-//			// Turn 3
-//			model.receiveBet(player.getId(), 1, 6, true);
-//			Thread.sleep(1000);
-//			model.receiveBet(player2.getId(), 0, 3, false); // not enough rune, should be ignored
-//			Thread.sleep(1000);
-//			model.receiveBet(player2.getId(), 0, 0, false); // Should show player 1 as winner of the battle and the game
-//		} else {
-//			// Turn 1
-//			model.receiveBet(player2.getId(), 2, 10, true);
-//			Thread.sleep(1000);
-//			model.receiveBet(player.getId(), 0, 3, false); // Should show player 2 as winner of the battle in whiteboard
-//			Thread.sleep(1000);
-//
-//			// Turn 2
-//			model.receiveBet(player2.getId(), 1, 7, false); // Wrong Player, should be ignored
-//			Thread.sleep(1000);
-//			model.receiveBet(player.getId(), 2, 8, false);
-//			Thread.sleep(1000);
-//			model.receiveBet(player2.getId(), 2, 10, true); // Card already played, should be ignored
-//			Thread.sleep(1000);
-//			model.receiveBet(player2.getId(), 1, 7, false); // Should show player 1 as winner
-//			Thread.sleep(1000);
-//
-//			// Turn 3
-//			model.receiveBet(player2.getId(), 0, 3, false); // not enough rune, should be ignored
-//			Thread.sleep(1000);
-//			model.receiveBet(player2.getId(), 0, 0, false);
-//			Thread.sleep(1000);
-//			model.receiveBet(player.getId(), 1, 6, true); // Should show player 1 as winner of the battle and the game
-//		}
-//		model.finishGame();
 
 		System.out.println("Press Enter to stop the agent");
 		Scanner scanner = new Scanner(System.in);

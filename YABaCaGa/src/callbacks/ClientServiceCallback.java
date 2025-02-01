@@ -109,6 +109,14 @@ public class ClientServiceCallback implements ServiceListener {
 				}
 				break;
 			}
+			case "opponentLeft": {
+				if (arguments.size() == 1) {
+					if (arguments.get(0) instanceof Boolean) {
+						functionHandler.opponentLeft((boolean) arguments.get(0));
+					}
+				}
+				break;
+			}
 			default:
 				throw new IllegalArgumentException("Unexpected value: " + serviceName);
 			}
