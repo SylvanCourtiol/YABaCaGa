@@ -159,7 +159,10 @@ public class Skill implements Serializable {
 	 * Modify the power modifier of this skill.
 	 * @param powerModifier the new power modifier.
 	 */
-	public void setPowerModifier(float powerModifier) {
+	public void setPowerModifier(float powerModifier) throws IllegalArgumentException {
+		if (powerModifier < NEUTRAL_MODIFIER) {
+			throw new IllegalArgumentException();
+		}
 		this.powerModifier = powerModifier;
 	}
 
@@ -174,7 +177,10 @@ public class Skill implements Serializable {
 	 * Modify the power bonus of this skill.
 	 * @param powerBonus the new power bonus.
 	 */
-	public void setPowerBonus(int powerBonus) {
+	public void setPowerBonus(int powerBonus) throws IllegalArgumentException {
+		if (powerBonus < NEUTRAL_BONUS) {
+			throw new IllegalArgumentException();
+		}
 		this.powerBonus = powerBonus;
 	}
 
@@ -189,7 +195,10 @@ public class Skill implements Serializable {
 	 * Modify the attack modifier of this skill.
 	 * @param attackModifier the new attack modifier.
 	 */
-	public void setAttackModifier(float attackModifier) {
+	public void setAttackModifier(float attackModifier) throws IllegalArgumentException {
+		if (attackModifier < NEUTRAL_MODIFIER) {
+			throw new IllegalArgumentException();
+		}
 		this.attackModifier = attackModifier;
 	}
 
@@ -204,7 +213,10 @@ public class Skill implements Serializable {
 	 * Modify the attack bonus of this skill.
 	 * @param attackBonus the new attack bonus.
 	 */
-	public void setAttackBonus(int attackBonus) {
+	public void setAttackBonus(int attackBonus) throws IllegalArgumentException {
+		if (attackBonus < NEUTRAL_BONUS) {
+			throw new IllegalArgumentException();
+		}
 		this.attackBonus = attackBonus;
 	}
 
@@ -219,7 +231,10 @@ public class Skill implements Serializable {
 	 * Modify the damage modifier of this skill.
 	 * @param damageModifier the new damage modifier.
 	 */
-	public void setDamageModifier(float damageModifier) {
+	public void setDamageModifier(float damageModifier) throws IllegalArgumentException {
+		if (damageModifier < NEUTRAL_MODIFIER) {
+			throw new IllegalArgumentException();
+		}
 		this.damageModifier = damageModifier;
 	}
 
@@ -234,7 +249,10 @@ public class Skill implements Serializable {
 	 * Modify the damage bonus of this skill.
 	 * @param damageBonus the new damage bonus.
 	 */
-	public void setDamageBonus(int damageBonus) {
+	public void setDamageBonus(int damageBonus) throws IllegalArgumentException {
+		if (damageBonus < NEUTRAL_BONUS) {
+			throw new IllegalArgumentException();
+		}
 		this.damageBonus = damageBonus;
 	}
 
@@ -250,7 +268,10 @@ public class Skill implements Serializable {
 	 * Modify the damage revenge of this skill.
 	 * @param damageRevenge the new damage revenge value.
 	 */
-	public void setDamageRevenge(int damageRevenge) {
+	public void setDamageRevenge(int damageRevenge) throws IllegalArgumentException {
+		if (damageRevenge < NEUTRAL_BONUS) {
+			throw new IllegalArgumentException();
+		}
 		this.damageRevenge = damageRevenge;
 	}
 
@@ -266,7 +287,10 @@ public class Skill implements Serializable {
 	 * Modify the rune payback of this skill.
 	 * @param runePayback the new rune payback value.
 	 */
-	public void setRunePayback(int runePayback) {
+	public void setRunePayback(int runePayback) throws IllegalArgumentException {
+		if (runePayback < NEUTRAL_BONUS) {
+			throw new IllegalArgumentException();
+		}
 		this.runePayback = runePayback;
 	}
 
@@ -282,7 +306,10 @@ public class Skill implements Serializable {
 	 * Modify the rune poison of this skill.
 	 * @param runePoison the new rune poison value.
 	 */
-	public void setRunePoison(int runePoison) {
+	public void setRunePoison(int runePoison) throws IllegalArgumentException {
+		if (runePoison < NEUTRAL_BONUS) {
+			throw new IllegalArgumentException();
+		}
 		this.runePoison = runePoison;
 	}
 
