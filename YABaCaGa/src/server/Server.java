@@ -135,6 +135,7 @@ public class Server implements AgentEventListener, WebSocketEventListener, Prope
 					args.add(true);
 					this.agent.serviceCall(s, "opponentLeft", args, "");
 					this.model.finishGame();
+					this.playersAgentName.clear();
 				}
 			}
 		}
@@ -221,6 +222,7 @@ public class Server implements AgentEventListener, WebSocketEventListener, Prope
 					}
 					if (this.model.getState() == State.MATCH_OVER) {
 						this.model.finishGame();
+						this.playersAgentName.clear();
 					}
 				}
 			} else {

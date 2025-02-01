@@ -24,6 +24,7 @@ class GameMasterTest implements PropertyChangeListener {
 	List<Card> correctDeck = null;
 	private Player p1 = null;
 	private Player p2 = null;
+	private int firstPlayer = -1;
 
 	@BeforeEach
 	void init() {
@@ -134,7 +135,7 @@ class GameMasterTest implements PropertyChangeListener {
 	}
 	
 	int nominalFirstBet() {
-		int firstPlayer = nominalGameBeginning();
+		firstPlayer = nominalGameBeginning();
 		int returnCode;
 		
 		if (firstPlayer == p1.getId()) {
@@ -181,6 +182,33 @@ class GameMasterTest implements PropertyChangeListener {
 			returnCode = gm.receiveBet(p1.getId(), 0, 1, false);
 		}
 		assertEquals(GameMaster.NOT_PLAYER_TURN_ERROR, returnCode);
+	}
+	
+	@Test
+	void receiveBetTestFirstPlayerNotPlayer() {
+		nominalGameBeginning();
+		Player intrus = new Player("Intrus", correctDeck);
+		
+		int returnCode = gm.receiveBet(intrus.getId(), 0, 1, false);
+		assertEquals(GameMaster.NOT_A_PLAYER_BET_ERROR, returnCode);
+	}
+	
+	int nominalSecondBet() {
+		nominalFirstBet();
+		int returnCode;
+		if (firstPlayer == p1.getId()) {
+			returnCode = gm.receiveBet(p2.getId(), 0, 1, false);
+		} else {
+			returnCode = gm.receiveBet(p1.getId(), 0, 1, false);
+		}
+		return returnCode;
+	}
+	
+	@Test
+	void receiveBetTestSecondPlayerNominal() {
+		nominalFirstBet();
+		int returnCode = nominalSecondBet();
+		assertEquals(0, returnCode);
 	}
 
 
