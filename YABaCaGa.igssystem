@@ -787,6 +787,12 @@
                 "name": "Test",
                 "package": "",
                 "uuid": "869d5cea-f93d-4360-8e9f-8bc9c059960e"
+            },
+            {
+                "code": "-> \"Les scripts de tests ne fonctionent pas pour notre projet.\"\n-> \"Merci de lire la documentation du projet pour plus de détails sur comment nous avons testé notre projet.\"\n-> \"Merci de votre compréhension\"\n",
+                "name": "A lire",
+                "package": "",
+                "uuid": "ef3ae83d-ffd4-4b88-b4bc-e040b4aa2f69"
             }
         ],
         "snippets": [
@@ -862,21 +868,6 @@
                     "width": 292.865189347972,
                     "x": 770.0433321379389,
                     "y": 327.2820277013108
-                },
-                {
-                    "data": {
-                        "data_decoder": "BINARY",
-                        "msg_type": "",
-                        "proto_file_path": "",
-                        "string_decoder": "PLAIN_TEXT"
-                    },
-                    "height": 112,
-                    "name": "",
-                    "tool": "com.ingescape.circle.tool.observer",
-                    "uuid": "767d0232-ba57-46d2-bdec-fdc3d0f8b64e",
-                    "width": 270,
-                    "x": 1114.3152953440617,
-                    "y": 327.26622805349274
                 },
                 {
                     "agent": {
@@ -1040,19 +1031,6 @@
                         "fromInput": "ui_command",
                         "to": "YABaCaGaServer",
                         "toOutput": "ui_command"
-                    }
-                ],
-                "others": [
-                    {
-                        "destination": "767d0232-ba57-46d2-bdec-fdc3d0f8b64e",
-                        "destinationIO": {
-                            "name": "wildcard",
-                            "type": "INPUT"
-                        },
-                        "source": "88a1d5c4-70a1-43d5-9073-97a385e1c40b",
-                        "sourceIO": {
-                            "type": "TRIGGER_OUT"
-                        }
                     }
                 ]
             },
