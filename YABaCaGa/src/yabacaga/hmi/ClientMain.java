@@ -4,6 +4,7 @@ import java.util.Arrays;
 import client.Client;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXMLLoader;
@@ -31,8 +32,10 @@ public class ClientMain extends Application {
 			primaryStage.show();
 			
 			primaryStage.setOnCloseRequest(e -> {
-				Client.getClient().getAgent().stop();
-				System.exit(0);
+				if (e.getEventType() == WindowEvent.WINDOW_CLOSE_REQUEST) {
+					Client.getClient().getAgent().stop();
+					System.exit(0);
+				}
 			});
 			
 		} catch(Exception e) {

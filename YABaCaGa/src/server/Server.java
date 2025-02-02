@@ -134,10 +134,10 @@ public class Server implements AgentEventListener, WebSocketEventListener, Prope
 					List<Object> args = new ArrayList<Object>();
 					args.add(true);
 					this.agent.serviceCall(s, "opponentLeft", args, "");
-					this.model.finishGame();
-					this.playersAgentName.clear();
 				}
 			}
+			this.model.finishGame();
+			this.playersAgentName.clear();
 		}
 	}
 
